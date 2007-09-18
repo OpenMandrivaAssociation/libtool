@@ -1,5 +1,5 @@
 %define version	1.5.22
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 %define major	3
 %define libname_orig	libltdl
