@@ -1,5 +1,5 @@
 %define version	1.5.22
-%define release	%mkrel 2
+%define release	%mkrel 3
 
 %define major	3
 %define libname_orig	libltdl
@@ -101,6 +101,8 @@ Group:		Development/C
 Summary:	Shared library files for libtool
 License:	LGPL
 Provides:	%{libname_orig} = %{version}-%{release}
+# old libextractor wrongly provided its own libltdl:
+Conflicts:	%{_lib}extractor1 < 0.5.18a
 
 %description -n %{libname}
 Shared library files for libtool DLL library from the libtool package.
