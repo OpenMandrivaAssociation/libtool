@@ -1,5 +1,5 @@
-%define version	1.5.22
-%define release	%mkrel 3
+%define version	1.5.24
+%define release	%mkrel 1
 
 %define major	3
 %define libname_orig	libltdl
@@ -49,10 +49,7 @@ Patch2:		libtool-1.5.6-ltmain-SED.patch
 Patch3:		libtool-1.5.6-libtoolize--config-only.patch
 Patch4:		libtool-1.5.6-test-dependency.patch
 Patch5:		libtool-1.5-testfailure.patch
-Patch6:		libtool-1.5.22-old-libtool.patch
 Patch7:		libtool-1.5.20-fix-gcj-reload-cmd.patch
-Patch8:		libtool-1.5.20-spu-config.patch
-Patch9:		libtool-1.5.22-fix-link.test.patch
 Patch10:	libtool-1.5.22-anygcc.patch
 
 %ifarch %biarches
@@ -127,13 +124,10 @@ Development headers, and files for development from the libtool package.
 %patch3 -p1 -b .libtoolize--config-only
 %patch4 -p1 -b .test-dependency
 %patch5 -p1
-%patch6 -p1 -b .old-libtool
 %patch7 -p1 -b .gcj-reload
-%patch8 -p1 -b .spu-config
-%patch9 -p1 -b .fix_test.link
 %patch10 -p1 -b .anygcc
 
-ACLOCAL=aclocal-1.8 AUTOMAKE=automake-1.8 ./bootstrap
+./bootstrap
 
 %build
 # don't use configure macro - it forces libtoolize, which is bad -jgarzik
