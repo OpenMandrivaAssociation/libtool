@@ -35,6 +35,7 @@ Release:	%{release}
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Source:		ftp://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.gz
 Source1:	%{SOURCE0}.sig
