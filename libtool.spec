@@ -1,6 +1,3 @@
-%define version	1.5.24
-%define release	%mkrel 1
-
 %define major	3
 %define libname_orig	libltdl
 %define libname		%mklibname ltdl %{major}
@@ -30,8 +27,8 @@
 
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
-Version:	%{version}
-Release:	%{release}
+Version:	1.5.26
+Release:	%mkrel 1
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
