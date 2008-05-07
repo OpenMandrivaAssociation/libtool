@@ -28,7 +28,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	1.5.26
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
@@ -48,6 +48,11 @@ Patch4:		libtool-1.5.6-test-dependency.patch
 Patch5:		libtool-1.5-testfailure.patch
 Patch7:		libtool-1.5.20-fix-gcj-reload-cmd.patch
 Patch10:	libtool-1.5.22-anygcc.patch
+
+# disable ugly test. needed by link_all_depslibs patch
+Patch11:	libtool-1.5.24-deplibs_test_disable.patch
+# from debian, cf http://wiki.mandriva.com/en/Overlinking
+Patch12:	libtool-1.5.24-link_all_deplibs.patch
 
 %ifarch %biarches
 BuildRequires:	linux32
@@ -123,6 +128,8 @@ Development headers, and files for development from the libtool package.
 %patch5 -p1
 %patch7 -p1 -b .gcj-reload
 %patch10 -p1 -b .anygcc
+%patch11 -p1 -b .uglytest
+%patch12 -p1 -b .overlinking
 
 ./bootstrap
 
