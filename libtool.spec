@@ -28,7 +28,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	1.5.26
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
@@ -53,6 +53,8 @@ Patch10:	libtool-1.5.22-anygcc.patch
 Patch11:	libtool-1.5.24-deplibs_test_disable.patch
 # from debian, cf http://wiki.mandriva.com/en/Overlinking
 Patch12:	libtool-1.5.24-link_all_deplibs.patch
+# cf http://wiki.mandriva.com/en/2009-underlinking-overlinking
+Patch13:	libtool-1.5.26-drop-ld-no-undefined-for-shared-lib-modules.patch
 
 %ifarch %biarches
 BuildRequires:	linux32
@@ -130,6 +132,7 @@ Development headers, and files for development from the libtool package.
 %patch10 -p1 -b .anygcc
 %patch11 -p1 -b .uglytest
 %patch12 -p1 -b .overlinking
+%patch13 -p1 -b .underlinking
 
 ./bootstrap
 
