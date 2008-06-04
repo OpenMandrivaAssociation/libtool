@@ -28,7 +28,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	1.5.26
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
@@ -41,7 +41,8 @@ Source2:	libtool-cputoolize.sh
 # (Abel) Patches please only modify ltmain.in and don't touch ltmain.sh
 # otherwise ltmain.sh will not be regenerated, and patches will be lost
 Patch0:		libtool-1.5.6-relink.patch
-Patch1:		libtool-1.5.18-lib64.patch
+# Set sys_lib_dlsearch_path_spec correctly on lib64 systems:
+Patch1:		libtool-1.5.26-lib64.patch
 Patch2:		libtool-1.5.6-ltmain-SED.patch
 Patch3:		libtool-1.5.6-libtoolize--config-only.patch
 Patch4:		libtool-1.5.6-test-dependency.patch
