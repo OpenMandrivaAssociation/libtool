@@ -201,12 +201,16 @@ rm -fr %{buildroot}
 %post base
 %_install_info %{name}.info
 
+%if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
+%endif
 
 %preun base
 %_remove_install_info %{name}.info
 
+%if %mdkversion < 200900
 %postun -n %{libname} -p /sbin/ldconfig
+%endif
 
 %files
 %defattr(-,root,root)
