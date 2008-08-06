@@ -28,7 +28,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	1.5.26
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
