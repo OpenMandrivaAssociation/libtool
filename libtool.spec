@@ -48,7 +48,6 @@ Patch3:		libtool-1.5.6-libtoolize--config-only.patch
 Patch4:		libtool-1.5.6-test-dependency.patch
 Patch5:		libtool-1.5-testfailure.patch
 Patch7:		libtool-1.5.20-fix-gcj-reload-cmd.patch
-Patch10:	libtool-1.5.22-anygcc.patch
 
 # disable ugly test. needed by link_all_depslibs patch
 Patch11:	libtool-1.5.24-deplibs_test_disable.patch
@@ -130,7 +129,6 @@ Development headers, and files for development from the libtool package.
 %patch4 -p1 -b .test-dependency
 %patch5 -p1
 %patch7 -p1 -b .gcj-reload
-%patch10 -p1 -b .anygcc
 %patch11 -p1 -b .uglytest
 %patch12 -p1 -b .overlinking
 %patch13 -p1 -b .underlinking
