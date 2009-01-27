@@ -36,6 +36,14 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Source:		ftp://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.gz
 Source1:	%{SOURCE0}.sig
+
+# deprecated: introduced in July 2003
+# (cf http://lists.mandriva.com/cooker-amd64/2003-12/msg00046.php)
+# but is not needed anymore since Sept 2003 change in rpm "Make "x86_64" the
+# canonical arch on amd64"
+#
+# since Jan 2009, the script doesn't use --config-only anymore since support
+# for --config-only in libtoolize has been dropped
 Source2:	libtool-cputoolize.sh
 
 # (Abel) Patches please only modify ltmain.in and don't touch ltmain.sh
@@ -44,7 +52,6 @@ Patch0:		libtool-1.5.6-relink.patch
 # Set sys_lib_dlsearch_path_spec correctly on lib64 systems:
 Patch1:		libtool-1.5.26-lib64.patch
 Patch2:		libtool-1.5.6-ltmain-SED.patch
-Patch3:		libtool-1.5.6-libtoolize--config-only.patch
 Patch4:		libtool-1.5.6-test-dependency.patch
 Patch5:		libtool-1.5-testfailure.patch
 Patch7:		libtool-1.5.20-fix-gcj-reload-cmd.patch
@@ -81,6 +88,9 @@ should install libtool.
 Group:		Development/C
 Summary:	Basic package for %{name}
 Conflicts:	libtool < 1.5.20-4mdk
+# since Jan 2009, cputoolize is deprecated and partially broken
+# so ensure old %configure (which was calling cputoolize) is not installed:
+Conflicts:	rpm-manbo-setup-build < 2-15
 Requires:	file
 # cputoolize uses sed
 Requires: 	sed
@@ -125,7 +135,6 @@ Development headers, and files for development from the libtool package.
 %patch0 -p1 -b .relink
 %patch1 -p1 -b .lib64
 %patch2 -p1 -b .ltmain-SED
-%patch3 -p1 -b .libtoolize--config-only
 %patch4 -p1 -b .test-dependency
 %patch5 -p1
 %patch7 -p1 -b .gcj-reload
