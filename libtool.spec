@@ -1,6 +1,11 @@
-%define major	3
+%define major	7
 %define libname_orig	libltdl
 %define libname		%mklibname ltdl %{major}
+%define libname_devel	%mklibname -d ltdl
+
+# for the testsuite:
+%define _disable_ld_no_undefined 1
+%define _disable_ld_as_needed 1
 
 # allow --with bootstrap
 %define bootstrap 0
@@ -27,14 +32,14 @@
 
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
-Version:	1.5.26
-Release:	%mkrel 6
+Version:	2.2.6
+Release:	%mkrel 1
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
-Source:		ftp://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.gz
+Source:		ftp://ftp.gnu.org/gnu/%{name}/%{name}-%{version}a.tar.lzma
 Source1:	%{SOURCE0}.sig
 
 # deprecated: introduced in July 2003
@@ -48,20 +53,12 @@ Source2:	libtool-cputoolize.sh
 
 # (Abel) Patches please only modify ltmain.in and don't touch ltmain.sh
 # otherwise ltmain.sh will not be regenerated, and patches will be lost
-Patch0:		libtool-1.5.6-relink.patch
-# Set sys_lib_dlsearch_path_spec correctly on lib64 systems:
-Patch1:		libtool-1.5.26-lib64.patch
-Patch2:		libtool-1.5.6-ltmain-SED.patch
-Patch4:		libtool-1.5.6-test-dependency.patch
-Patch5:		libtool-1.5-testfailure.patch
-Patch7:		libtool-1.5.20-fix-gcj-reload-cmd.patch
-
-# disable ugly test. needed by link_all_depslibs patch
-Patch11:	libtool-1.5.24-deplibs_test_disable.patch
-# from debian, cf http://wiki.mandriva.com/en/Overlinking
-Patch12:	libtool-1.5.24-link_all_deplibs.patch
-# cf http://wiki.mandriva.com/en/2009-underlinking-overlinking
-Patch13:	libtool-1.5.26-drop-ld-no-undefined-for-shared-lib-modules.patch
+Patch0:		relink.patch
+Patch1:		lib64.patch
+Patch2:		ltmain-SED.patch
+Patch7:		fix-gcj-reload-cmd.patch
+Patch12:	do-not-link-against-deplibs.patch
+Patch13:	drop-ld-no-undefined-for-shared-lib-modules.patch
 
 %ifarch %biarches
 BuildRequires:	linux32
@@ -89,7 +86,7 @@ Group:		Development/C
 Summary:	Basic package for %{name}
 Conflicts:	libtool < 1.5.20-4mdk
 # since Jan 2009, cputoolize is deprecated and partially broken
-# so ensure old %configure (which was calling cputoolize) is not installed:
+# so ensure old %%configure (which was calling cputoolize) is not installed:
 Conflicts:	rpm-manbo-setup-build < 2-15
 Requires:	file
 # cputoolize uses sed
@@ -118,7 +115,7 @@ Conflicts:	%{_lib}extractor1 < 0.5.18a
 %description -n %{libname}
 Shared library files for libtool DLL library from the libtool package.
 
-%package -n %{libname}-devel
+%package -n %{libname_devel}
 Group:		Development/C
 Summary:	Development files for libtool
 License:	LGPL
@@ -127,7 +124,7 @@ Requires:	%{libname} = %{version}
 Provides:	%{libname_orig}-devel = %{version}-%{release}
 Provides:	%{name}-devel
 
-%description -n %{libname}-devel
+%description -n %{libname_devel}
 Development headers, and files for development from the libtool package.
 
 %prep
@@ -135,16 +132,13 @@ Development headers, and files for development from the libtool package.
 %patch0 -p1 -b .relink
 %patch1 -p1 -b .lib64
 %patch2 -p1 -b .ltmain-SED
-%patch4 -p1 -b .test-dependency
-%patch5 -p1
 %patch7 -p1 -b .gcj-reload
-%patch11 -p1 -b .uglytest
 %patch12 -p1 -b .overlinking
 %patch13 -p1 -b .underlinking
 
+%build
 ./bootstrap
 
-%build
 # don't use configure macro - it forces libtoolize, which is bad -jgarzik
 # Use configure macro but define __libtoolize to be /bin/true -Geoff
 %define __libtoolize /bin/true
@@ -177,6 +171,7 @@ sed -i -e 's/^\(predep_objects\)=.*/\1=""/' \
        -e 's/^\(archive_cmds=\".*\) -nostdlib /\1 /' \
        -e 's/^\(archive_expsym_cmds=\".*\) -nostdlib /\1 /' \
        libtool
+# should "compiler_lib_search_dirs" be cleaned too?
 
 popd
 
@@ -185,18 +180,13 @@ pushd    build-%{_target_cpu}-%{_target_os}
 set +x
 echo ====================TESTING=========================
 set -x
-#ifarch ia64
-# - ia64: SIGILL when running hellodl
-#make check || echo make check failed
-#else
 # all tests must pass here
-make check
-#endif
+# disabling icecream since some tests check the output of gcc
+ICECC=no make check
 set +x
 echo ====================TESTING END=====================
 set -x
 
-make -C demo clean
 popd
 
 %install
@@ -239,9 +229,7 @@ rm -fr %{buildroot}
 %ifarch %biarches
 %define alt_multiarch_bindir %(linux32 /bin/rpm --eval %%multiarch_bindir)
 %{multiarch_bindir}
-%{multiarch_bindir}/libtool
 %{alt_multiarch_bindir}
-%{alt_multiarch_bindir}/libtool
 %endif
 
 %files base
@@ -257,11 +245,12 @@ rm -fr %{buildroot}
 %files -n %{libname}
 %defattr(-,root,root)
 %doc libltdl/README
-%{_libdir}/*.so.*
+%{_libdir}/libltdl.so.%{major}
+%{_libdir}/libltdl.so.%{major}.*
 
-%files -n %{libname}-devel
+%files -n %{libname_devel}
 %defattr(-,root,root)
-%doc demo
+%doc tests/demo
 %{_includedir}/*
 %{_libdir}/*.a
 %{_libdir}/*.so
