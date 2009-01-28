@@ -33,7 +33,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.2.6
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
@@ -59,6 +59,7 @@ Patch2:		ltmain-SED.patch
 Patch7:		fix-gcj-reload-cmd.patch
 Patch12:	do-not-link-against-deplibs.patch
 Patch13:	drop-ld-no-undefined-for-shared-lib-modules.patch
+Patch14:	fix-checking-libltdl-is-installed-installable.patch
 
 %ifarch %biarches
 BuildRequires:	linux32
@@ -136,6 +137,7 @@ Development headers, and files for development from the libtool package.
 %patch7 -p1 -b .gcj-reload
 %patch12 -p1 -b .overlinking
 %patch13 -p1 -b .underlinking
+%patch14 -p1
 
 %build
 ./bootstrap
