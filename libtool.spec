@@ -33,7 +33,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.2.6
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
@@ -123,6 +123,7 @@ Requires:	%{name} = %{version}
 Requires:	%{libname} = %{version}
 Provides:	%{libname_orig}-devel = %{version}-%{release}
 Provides:	%{name}-devel
+Obsoletes:	%{mklibname ltdl 3}-devel
 
 %description -n %{libname_devel}
 Development headers, and files for development from the libtool package.
