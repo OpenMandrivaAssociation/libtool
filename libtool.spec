@@ -33,7 +33,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.2.6
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
@@ -54,7 +54,6 @@ Source2:	libtool-cputoolize.sh
 # (Abel) Patches please only modify ltmain.in and don't touch ltmain.sh
 # otherwise ltmain.sh will not be regenerated, and patches will be lost
 Patch0:		relink.patch
-Patch1:		lib64.patch
 Patch2:		ltmain-SED.patch
 Patch7:		fix-gcj-reload-cmd.patch
 Patch12:	do-not-link-against-deplibs.patch
@@ -132,7 +131,6 @@ Development headers, and files for development from the libtool package.
 %prep
 %setup -q
 %patch0 -p1 -b .relink
-%patch1 -p1 -b .lib64
 %patch2 -p1 -b .ltmain-SED
 %patch7 -p1 -b .gcj-reload
 %patch12 -p1 -b .overlinking
