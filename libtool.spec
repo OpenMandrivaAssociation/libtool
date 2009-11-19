@@ -164,6 +164,10 @@ linux32 make
 popd
 %endif
 
+%ifarch x86_64
+export CFLAGS="$CFLAGS -fPIC"
+%endif
+
 mkdir -p build-%{_target_cpu}-%{_target_os}
 pushd    build-%{_target_cpu}-%{_target_os}
 CONFIGURE_TOP=.. %configure2_5x
