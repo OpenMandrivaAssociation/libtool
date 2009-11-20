@@ -7,6 +7,14 @@
 %define _disable_ld_no_undefined 1
 %define _disable_ld_as_needed 1
 
+# gcj does not like -Wformat and spits a warning.
+# This causes configure script to assume unsupported -fPIC (among other
+# options), and thus gcj-built shared libraries will be built without -fPIC,
+# causing breakage.
+# Java seems to lack its own compiler flags variable (like CXXFLAGS, FFLAGS)
+# in ./configure --help (GCJFLAGS does not seem to do it).
+%define Werror_cflags %nil
+
 # allow --with bootstrap
 %define bootstrap 0
 %{?_with_bootstrap: %global bootstrap 1}
@@ -33,7 +41,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.2.6
-Release:	%mkrel 8
+Release:	%mkrel 9
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
@@ -162,10 +170,6 @@ pushd    build-%{alt_arch}-%{_target_os}
 linux32 ../configure --prefix=%{_prefix} --build=%{alt_arch}-%{_real_vendor}-%{_target_os}%{?_gnu}
 linux32 make
 popd
-%endif
-
-%ifarch x86_64
-export CFLAGS="$CFLAGS -fPIC"
 %endif
 
 mkdir -p build-%{_target_cpu}-%{_target_os}
