@@ -7,14 +7,6 @@
 %define _disable_ld_no_undefined 1
 %define _disable_ld_as_needed 1
 
-# gcj does not like -Wformat and spits a warning.
-# This causes configure script to assume unsupported -fPIC (among other
-# options), and thus gcj-built shared libraries will be built without -fPIC,
-# causing breakage.
-# Java seems to lack its own compiler flags variable (like CXXFLAGS, FFLAGS)
-# in ./configure --help (GCJFLAGS does not seem to do it).
-%define Werror_cflags %nil
-
 # allow --with bootstrap
 %define bootstrap 0
 %{?_with_bootstrap: %global bootstrap 1}
@@ -41,7 +33,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.2.6
-Release:	%mkrel 9
+Release:	%mkrel 10
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
@@ -70,6 +62,8 @@ Patch13:	drop-ld-no-undefined-for-shared-lib-modules.patch
 Patch14:	fix-checking-libltdl-is-installed-installable.patch
 # From upstream git, fixes test 4
 Patch15:	libtoolize-ignore-trailing-junk-on-scriptversion-line.patch
+# (cjw) do not use CFLAGS when running gcj
+Patch16:	libtool-2.2.6-use-gcjflags-for-gcj.patch
 
 %ifarch %biarches
 BuildRequires:	linux32
@@ -80,7 +74,7 @@ Buildrequires:	autoconf2.5
 Buildrequires:	locales-de
 %if ! %{bootstrap}
 BuildRequires:	gcc-%{fortran_compiler}
-BuildRequires:	gcc-java
+BuildRequires:	gcc-java libgcj-static-devel
 %endif
 Requires:	%{name}-base = %{version}-%{release}
 
@@ -151,6 +145,7 @@ Development headers, and files for development from the libtool package.
 %patch13 -p1 -b .underlinking
 %patch14 -p1
 %patch15 -p1 
+%patch16 -p1 -b .gcj-no-cflags
 
 %build
 ./bootstrap
