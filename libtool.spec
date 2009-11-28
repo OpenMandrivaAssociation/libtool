@@ -32,14 +32,14 @@
 
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
-Version:	2.2.6
-Release:	%mkrel 10
+Version:	2.2.6b
+Release:	%mkrel 1
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
-Source:		ftp://ftp.gnu.org/gnu/%{name}/%{name}-%{version}a.tar.lzma
+Source:		ftp://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.lzma
 Source1:	%{SOURCE0}.sig
 
 # deprecated: introduced in July 2003
@@ -56,14 +56,14 @@ Source2:	libtool-cputoolize.sh
 Patch0:		relink.patch
 Patch1:		lib64.patch
 Patch2:		ltmain-SED.patch
-Patch7:		fix-gcj-reload-cmd.patch
 Patch12:	do-not-link-against-deplibs.patch
 Patch13:	drop-ld-no-undefined-for-shared-lib-modules.patch
 Patch14:	fix-checking-libltdl-is-installed-installable.patch
-# From upstream git, fixes test 4
-Patch15:	libtoolize-ignore-trailing-junk-on-scriptversion-line.patch
 # (cjw) do not use CFLAGS when running gcj
 Patch16:	libtool-2.2.6-use-gcjflags-for-gcj.patch
+# (cjw) in the libltdl install test, use --enable-ltdl-install to make sure 
+#       the library is built even if it is installed on the system
+Patch17:	libtool-2.2.6b-libltdl-install-test-fix.patch
 
 %ifarch %biarches
 BuildRequires:	linux32
@@ -140,12 +140,11 @@ Development headers, and files for development from the libtool package.
 %patch0 -p1 -b .relink
 %patch1 -p1 -b .lib64
 %patch2 -p1 -b .ltmain-SED
-%patch7 -p1 -b .gcj-reload
 %patch12 -p1 -b .overlinking
 %patch13 -p1 -b .underlinking
 %patch14 -p1
-%patch15 -p1 
 %patch16 -p1 -b .gcj-no-cflags
+%patch17 -p1 -b .ignore-system-libltdl
 
 %build
 ./bootstrap
