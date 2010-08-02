@@ -32,8 +32,8 @@
 
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
-Version:	2.2.6b
-Release:	%mkrel 2
+Version:	2.2.10
+Release:	%mkrel 1
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
@@ -68,8 +68,8 @@ Patch17:	libtool-2.2.6b-libltdl-install-test-fix.patch
 %ifarch %biarches
 BuildRequires:	linux32
 %endif
-BuildRequires:	automake1.8
-Buildrequires:	autoconf2.5
+BuildRequires:	automake
+Buildrequires:	autoconf
 # For test 37 to succeed
 Buildrequires:	locales-de
 %if ! %{bootstrap}
@@ -192,7 +192,7 @@ echo ====================TESTING=========================
 set -x
 # all tests must pass here
 # disabling icecream since some tests check the output of gcc
-ICECC=no make check
+ICECC=no %make check
 set +x
 echo ====================TESTING END=====================
 set -x
@@ -236,6 +236,7 @@ rm -fr %{buildroot}
 %doc AUTHORS INSTALL NEWS README
 %doc THANKS TODO ChangeLog*
 %{_bindir}/libtool
+%{_mandir}/man1/libtool.1.*
 %ifarch %biarches
 %define alt_multiarch_bindir %(linux32 /bin/rpm --eval %%multiarch_bindir)
 %{multiarch_bindir}
@@ -248,6 +249,7 @@ rm -fr %{buildroot}
 %doc THANKS TODO ChangeLog*
 %{_bindir}/cputoolize
 %{_bindir}/libtoolize
+%{_mandir}/man1/libtoolize.*
 %{_infodir}/libtool.info*
 %{_datadir}/libtool
 %{_datadir}/aclocal/*.m4
