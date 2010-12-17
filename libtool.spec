@@ -32,14 +32,14 @@
 
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
-Version:	2.2.10
+Version:	2.4
 Release:	%mkrel 1
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
-Source:		ftp://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.lzma
+Source:		ftp://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.xz
 Source1:	%{SOURCE0}.sig
 
 # deprecated: introduced in July 2003
@@ -53,7 +53,12 @@ Source2:	libtool-cputoolize.sh
 
 # (Abel) Patches please only modify ltmain.in and don't touch ltmain.sh
 # otherwise ltmain.sh will not be regenerated, and patches will be lost
+
+# (cjw) when a library that is produced in the build is also linked against, 
+#       make sure that the library in the rpm install dir is used for relinking 
+#	even if (an older version of) the lib is installed on the system
 Patch0:		relink.patch
+#
 Patch1:		lib64.patch
 Patch2:		ltmain-SED.patch
 Patch12:	do-not-link-against-deplibs.patch
@@ -64,6 +69,9 @@ Patch16:	libtool-2.2.6-use-gcjflags-for-gcj.patch
 # (cjw) in the libltdl install test, use --enable-ltdl-install to make sure 
 #       the library is built even if it is installed on the system
 Patch17:	libtool-2.2.6b-libltdl-install-test-fix.patch
+# (cjw) mdemo-dryrun test may fail because file sizes are incorrect in 'before' 
+#       file list
+Patch18:	libtool-2.4-dryrun-sleepmore.patch
 
 %ifarch %biarches
 BuildRequires:	linux32
@@ -145,6 +153,7 @@ Development headers, and files for development from the libtool package.
 %patch14 -p1
 %patch16 -p1 -b .gcj-no-cflags
 %patch17 -p1 -b .ignore-system-libltdl
+%patch18 -p1 -b .sleepmore
 
 %build
 ./bootstrap
