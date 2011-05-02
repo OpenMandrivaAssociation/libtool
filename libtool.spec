@@ -219,6 +219,7 @@ chmod 755 %{buildroot}%{_bindir}/cputoolize
 # biarch support
 %ifarch %biarches
 %multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/libtool
+
 install -m 755 build-%{alt_arch}-%{_target_os}/libtool $RPM_BUILD_ROOT%{_bindir}/libtool
 linux32 /bin/sh -c '%multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/libtool'
 %endif
