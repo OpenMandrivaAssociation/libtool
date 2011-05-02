@@ -73,6 +73,9 @@ Patch17:	libtool-2.2.6b-libltdl-install-test-fix.patch
 #       file list
 Patch18:	libtool-2.4-dryrun-sleepmore.patch
 
+# (oe) http://lists.gnu.org/archive/html/libtool-patches/2011-04/msg00000.html
+Patch19:	libtool-2.4-define_shlibpath_overrides_runpath.diff
+
 %ifarch %biarches
 BuildRequires:	linux32
 %endif
@@ -154,6 +157,7 @@ Development headers, and files for development from the libtool package.
 %patch16 -p1 -b .gcj-no-cflags
 %patch17 -p1 -b .ignore-system-libltdl
 %patch18 -p1 -b .sleepmore
+%patch19 -p0 -b .define_shlibpath_overrides_runpath
 
 %build
 ./bootstrap
