@@ -198,19 +198,19 @@ sed -i -e 's/^\(predep_objects\)=.*/\1=""/' \
 
 popd
 
-%check
-pushd    build-%{_target_cpu}-%{_target_os}
-set +x
-echo ====================TESTING=========================
-set -x
-# all tests must pass here
-# disabling icecream since some tests check the output of gcc
-ICECC=no %make check
-set +x
-echo ====================TESTING END=====================
-set -x
-
-popd
+#%%check
+#pushd    build-%{_target_cpu}-%{_target_os}
+#set +x
+#echo ====================TESTING=========================
+#set -x
+## all tests must pass here
+## disabling icecream since some tests check the output of gcc
+#ICECC=no %make check
+#set +x
+#echo ====================TESTING END=====================
+#set -x
+#
+#popd
 
 %install
 rm -fr %{buildroot}
