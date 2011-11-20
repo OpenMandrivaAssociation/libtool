@@ -1,7 +1,7 @@
 %define major	7
 %define libname_orig	libltdl
 %define libname		%mklibname ltdl %{major}
-%define libname_devel	%mklibname -d ltdl
+%define develname	%mklibname -d ltdl
 
 # for the testsuite:
 %define _disable_ld_no_undefined 1
@@ -10,6 +10,14 @@
 # allow --with bootstrap
 %define bootstrap 0
 %{?_with_bootstrap: %global bootstrap 1}
+
+%define arch_has_java 1
+%ifarch %arm %mips
+%define arch_has_java 0
+%endif
+%if %bootstrap
+%define arch_has_java 0
+%endif
 
 # define biarch platforms
 %define biarches x86_64 ppc64 sparc64
@@ -23,23 +31,17 @@
 %define alt_arch sparc
 %endif
 
-# define fortran compiler
-%if %{mdkversion} >= 200600
 %define fortran_compiler gfortran
-%else
-%define fortran_compiler g77
-%endif
 
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
-Version:	2.4
-Release:	%mkrel 3
+Version:	2.4.2
+Release:	1
 License:	GPL
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
-Source:		ftp://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.xz
+Source0:	ftp://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.xz
 Source1:	%{SOURCE0}.sig
 
 # deprecated: introduced in July 2003
@@ -85,6 +87,8 @@ Buildrequires:	autoconf
 Buildrequires:	locales-de
 %if ! %{bootstrap}
 BuildRequires:	gcc-%{fortran_compiler}
+%endif
+%if %{arch_has_java}
 BuildRequires:	gcc-java libgcj-static-devel
 %endif
 Requires:	%{name}-base = %{version}-%{release}
@@ -102,10 +106,6 @@ should install libtool.
 %package base
 Group:		Development/C
 Summary:	Basic package for %{name}
-Conflicts:	libtool < 1.5.20-4mdk
-# since Jan 2009, cputoolize is deprecated and partially broken
-# so ensure old %%configure (which was calling cputoolize) is not installed:
-Conflicts:	rpm-manbo-setup-build < 2-15
 Requires:	file
 # cputoolize uses sed
 Requires: 	sed
@@ -133,7 +133,7 @@ Conflicts:	%{_lib}extractor1 < 0.5.18a
 %description -n %{libname}
 Shared library files for libtool DLL library from the libtool package.
 
-%package -n %{libname_devel}
+%package -n %{develname}
 Group:		Development/C
 Summary:	Development files for libtool
 License:	LGPL
@@ -143,7 +143,7 @@ Provides:	%{libname_orig}-devel = %{version}-%{release}
 Provides:	%{name}-devel
 Obsoletes:	%{mklibname ltdl 3}-devel
 
-%description -n %{libname_devel}
+%description -n %{develname}
 Development headers, and files for development from the libtool package.
 
 %prep
@@ -222,31 +222,19 @@ chmod 755 %{buildroot}%{_bindir}/cputoolize
 
 # biarch support
 %ifarch %biarches
-%multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/libtool
+%multiarch_binaries %{buildroot}%{_bindir}/libtool
 
-install -m 755 build-%{alt_arch}-%{_target_os}/libtool $RPM_BUILD_ROOT%{_bindir}/libtool
-linux32 /bin/sh -c '%multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/libtool'
+install -m 755 build-%{alt_arch}-%{_target_os}/libtool %{buildroot}%{_bindir}/libtool
+linux32 /bin/sh -c '%multiarch_binaries %{buildroot}%{_bindir}/libtool'
 %endif
-
-%clean
-rm -fr %{buildroot}
 
 %post base
 %_install_info %{name}.info
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
 %preun base
 %_remove_install_info %{name}.info
 
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
 %files
-%defattr(-,root,root)
 %doc AUTHORS INSTALL NEWS README
 %doc THANKS TODO ChangeLog*
 %{_bindir}/libtool
@@ -258,7 +246,6 @@ rm -fr %{buildroot}
 %endif
 
 %files base
-%defattr(-,root,root)
 %doc AUTHORS INSTALL NEWS README
 %doc THANKS TODO ChangeLog*
 %{_bindir}/cputoolize
@@ -269,17 +256,13 @@ rm -fr %{buildroot}
 %{_datadir}/aclocal/*.m4
 
 %files -n %{libname}
-%defattr(-,root,root)
 %doc libltdl/README
-%{_libdir}/libltdl.so.%{major}
-%{_libdir}/libltdl.so.%{major}.*
+%{_libdir}/libltdl.so.%{major}*
 
-%files -n %{libname_devel}
-%defattr(-,root,root)
+%files -n %{develname}
 %doc tests/demo
 %{_includedir}/*
 %{_libdir}/*.a
 %{_libdir}/*.so
 %{_libdir}/*.la
-
 
