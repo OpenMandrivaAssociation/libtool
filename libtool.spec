@@ -75,9 +75,6 @@ Patch17:	libtool-2.2.6b-libltdl-install-test-fix.patch
 #       file list
 Patch18:	libtool-2.4-dryrun-sleepmore.patch
 
-# (oe) http://lists.gnu.org/archive/html/libtool-patches/2011-04/msg00000.html
-Patch19:	libtool-2.4-define_shlibpath_overrides_runpath.diff
-
 %ifarch %biarches
 BuildRequires:	linux32
 %endif
@@ -148,16 +145,7 @@ Development headers, and files for development from the libtool package.
 
 %prep
 %setup -q
-%patch0 -p1 -b .relink
-%patch1 -p1 -b .lib64
-%patch2 -p1 -b .ltmain-SED
-%patch12 -p1 -b .overlinking
-%patch13 -p1 -b .underlinking
-%patch14 -p1
-%patch16 -p1 -b .gcj-no-cflags
-%patch17 -p1 -b .ignore-system-libltdl
-%patch18 -p1 -b .sleepmore
-%patch19 -p0 -b .define_shlibpath_overrides_runpath
+%apply_patches
 
 %build
 ./bootstrap
@@ -246,8 +234,6 @@ linux32 /bin/sh -c '%multiarch_binaries %{buildroot}%{_bindir}/libtool'
 %endif
 
 %files base
-%doc AUTHORS INSTALL NEWS README
-%doc THANKS TODO ChangeLog*
 %{_bindir}/cputoolize
 %{_bindir}/libtoolize
 %{_mandir}/man1/libtoolize.*
@@ -256,10 +242,10 @@ linux32 /bin/sh -c '%multiarch_binaries %{buildroot}%{_bindir}/libtool'
 %{_datadir}/aclocal/*.m4
 
 %files -n %{libname}
-%doc libltdl/README
 %{_libdir}/libltdl.so.%{major}*
 
 %files -n %{develname}
+%doc libltdl/README
 %doc tests/demo
 %{_includedir}/*
 %{_libdir}/*.a
