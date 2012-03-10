@@ -143,10 +143,9 @@ Development headers, and files for development from the libtool package.
 %prep
 %setup -q
 %apply_patches
-
-%build
 ./bootstrap
 
+%build
 # don't use configure macro - it forces libtoolize, which is bad -jgarzik
 # Use configure macro but define __libtoolize to be /bin/true -Geoff
 %define __libtoolize /bin/true
