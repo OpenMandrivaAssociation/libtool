@@ -87,7 +87,7 @@ BuildRequires:	gcc-%{fortran_compiler}
 %if %{arch_has_java}
 BuildRequires:	gcc-java libgcj-static-devel
 %endif
-Requires:	%{name}-base = %{version}-%{release}
+Requires:	%{name}-base = %{EVRD}
 
 %description
 The libtool package contains the GNU libtool, a set of shell scripts
@@ -132,9 +132,9 @@ Shared library files for libtool DLL library from the libtool package.
 Group:		Development/C
 Summary:	Development files for libtool
 License:	LGPLv2.1+
-Requires:	%{name} = %{version}
-Requires:	%{libname} = %{version}
-Provides:	%{name}-devel
+Requires:	%{name} = %{EVRD}
+Requires:	%{libname} = %{EVRD}
+Provides:	%{name}-devel = %{EVRD}
 Obsoletes:	%{mklibname ltdl 3}-devel
 
 %description -n	%{devname}
