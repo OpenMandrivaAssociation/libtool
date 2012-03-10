@@ -158,7 +158,7 @@ Development headers, and files for development from the libtool package.
 %ifarch %{biarches}
 mkdir -p build-%{alt_arch}-%{_target_os}
 pushd    build-%{alt_arch}-%{_target_os}
-linux32 ../configure --prefix=%{_prefix} --build=%{alt_arch}-%{_real_vendor}-%{_target_os}%{?_gnu}
+CONFIGURE_TOP=.. linux32 sh -c "`linux32 rpm -E %%configure2_5x`" #../configure --prefix=%{_prefix} --build=%{alt_arch}-%{_real_vendor}-%{_target_os}%{?_gnu}
 linux32 make
 popd
 %endif
