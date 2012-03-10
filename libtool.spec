@@ -1,21 +1,20 @@
 %define major	7
 %define libname_orig	libltdl
-%define libname		%mklibname ltdl %{major}
-%define develname	%mklibname -d ltdl
+%define libname	%mklibname ltdl %{major}
+%define devname	%mklibname -d ltdl
 
 # for the testsuite:
 %define _disable_ld_no_undefined 1
 %define _disable_ld_as_needed 1
 
 # allow --with bootstrap
-%define bootstrap 0
-%{?_with_bootstrap: %global bootstrap 1}
+%bcond_with bootstrap
 
 %define arch_has_java 1
-%ifarch %arm %mips
+%ifarch %{arm} %{mips}
 %define arch_has_java 0
 %endif
-%if %bootstrap
+%if %{with bootstrap}
 %define arch_has_java 0
 %endif
 
@@ -76,14 +75,14 @@ Patch17:	libtool-2.2.6b-libltdl-install-test-fix.patch
 Patch18:	libtool-2.4-dryrun-sleepmore.patch
 Patch19:	libtool-2.4.2-drop-soname-for-modules.patch
 
-%ifarch %biarches
+%ifarch %{biarches}
 BuildRequires:	linux32
 %endif
 BuildRequires:	automake
 Buildrequires:	autoconf
 # For test 37 to succeed
 Buildrequires:	locales-de
-%if ! %{bootstrap}
+%if ! %{with bootstrap}
 BuildRequires:	gcc-%{fortran_compiler}
 %endif
 %if %{arch_has_java}
@@ -101,14 +100,14 @@ libraries.
 If you are developing programs which will use shared libraries, you
 should install libtool.
 
-%package base
+%package	base
 Group:		Development/C
 Summary:	Basic package for %{name}
 Requires:	file
 # cputoolize uses sed
 Requires: 	sed
-Requires(post): info-install
-Requires(preun): info-install
+Requires(post):	info-install
+Requires(preun):info-install
 
 %description base
 The libtool package contains the GNU libtool, a set of shell scripts
@@ -120,7 +119,7 @@ libraries.
 If you are developing programs which will use shared libraries, you
 should install libtool.
 
-%package -n %{libname}
+%package -n	%{libname}
 Group:		Development/C
 Summary:	Shared library files for libtool
 License:	LGPL
@@ -128,10 +127,10 @@ Provides:	%{libname_orig} = %{version}-%{release}
 # old libextractor wrongly provided its own libltdl:
 Conflicts:	%{_lib}extractor1 < 0.5.18a
 
-%description -n %{libname}
+%description -n	%{libname}
 Shared library files for libtool DLL library from the libtool package.
 
-%package -n %{develname}
+%package -n	%{devname}
 Group:		Development/C
 Summary:	Development files for libtool
 License:	LGPL
@@ -141,7 +140,7 @@ Provides:	%{libname_orig}-devel = %{version}-%{release}
 Provides:	%{name}-devel
 Obsoletes:	%{mklibname ltdl 3}-devel
 
-%description -n %{develname}
+%description -n	%{devname}
 Development headers, and files for development from the libtool package.
 
 %prep
@@ -160,7 +159,7 @@ Development headers, and files for development from the libtool package.
 # build alt-arch libtool first
 # NOTE: don't bother to make libtool biarch capable within the same
 # "binary", use the multiarch facility to dispatch to the right script.
-%ifarch %biarches
+%ifarch %{biarches}
 mkdir -p build-%{alt_arch}-%{_target_os}
 pushd    build-%{alt_arch}-%{_target_os}
 linux32 ../configure --prefix=%{_prefix} --build=%{alt_arch}-%{_real_vendor}-%{_target_os}%{?_gnu}
@@ -202,7 +201,6 @@ popd
 #popd
 
 %install
-rm -fr %{buildroot}
 %makeinstall_std -C build-%{_target_cpu}-%{_target_os}
 
 sed -e "s,@prefix@,%{_prefix}," -e "s,@datadir@,%{_datadir}," %{SOURCE2} \
@@ -210,7 +208,7 @@ sed -e "s,@prefix@,%{_prefix}," -e "s,@datadir@,%{_datadir}," %{SOURCE2} \
 chmod 755 %{buildroot}%{_bindir}/cputoolize
 
 # biarch support
-%ifarch %biarches
+%ifarch %{biarches}
 %multiarch_binaries %{buildroot}%{_bindir}/libtool
 
 install -m 755 build-%{alt_arch}-%{_target_os}/libtool %{buildroot}%{_bindir}/libtool
@@ -245,7 +243,7 @@ linux32 /bin/sh -c '%multiarch_binaries %{buildroot}%{_bindir}/libtool'
 %files -n %{libname}
 %{_libdir}/libltdl.so.%{major}*
 
-%files -n %{develname}
+%files -n %{devname}
 %doc libltdl/README
 %doc tests/demo
 %{_includedir}/*
