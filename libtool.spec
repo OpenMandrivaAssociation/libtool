@@ -59,7 +59,7 @@ Source2:	libtool-cputoolize.sh
 #	even if (an older version of) the lib is installed on the system
 Patch0:		relink.patch
 #
-Patch1:		lib64.patch
+Patch1:		libtool-2.2.10-rpath.patch
 Patch2:		ltmain-SED.patch
 Patch12:	do-not-link-against-deplibs.patch
 Patch13:	drop-ld-no-undefined-for-shared-lib-modules.patch
