@@ -1,5 +1,4 @@
 %define major	7
-%define libname_orig	libltdl
 %define libname	%mklibname ltdl %{major}
 %define devname	%mklibname -d ltdl
 
@@ -109,7 +108,7 @@ Requires: 	sed
 Requires(post):	info-install
 Requires(preun):info-install
 
-%description base
+%description	base
 The libtool package contains the GNU libtool, a set of shell scripts
 which automatically configure UNIX and UNIX-like architectures to
 generically build shared libraries.  Libtool provides a consistent,
@@ -123,7 +122,6 @@ should install libtool.
 Group:		Development/C
 Summary:	Shared library files for libtool
 License:	LGPLv2.1+
-Provides:	%{libname_orig} = %{version}-%{release}
 # old libextractor wrongly provided its own libltdl:
 Conflicts:	%{_lib}extractor1 < 0.5.18a
 
@@ -136,7 +134,6 @@ Summary:	Development files for libtool
 License:	LGPLv2.1+
 Requires:	%{name} = %{version}
 Requires:	%{libname} = %{version}
-Provides:	%{libname_orig}-devel = %{version}-%{release}
 Provides:	%{name}-devel
 Obsoletes:	%{mklibname ltdl 3}-devel
 
