@@ -36,7 +36,7 @@ Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.2
 Release:	2
-License:	GPL
+License:	GPLv2+
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
 
@@ -122,7 +122,7 @@ should install libtool.
 %package -n	%{libname}
 Group:		Development/C
 Summary:	Shared library files for libtool
-License:	LGPL
+License:	LGPLv2.1+
 Provides:	%{libname_orig} = %{version}-%{release}
 # old libextractor wrongly provided its own libltdl:
 Conflicts:	%{_lib}extractor1 < 0.5.18a
@@ -133,7 +133,7 @@ Shared library files for libtool DLL library from the libtool package.
 %package -n	%{devname}
 Group:		Development/C
 Summary:	Development files for libtool
-License:	LGPL
+License:	LGPLv2.1+
 Requires:	%{name} = %{version}
 Requires:	%{libname} = %{version}
 Provides:	%{libname_orig}-devel = %{version}-%{release}
@@ -226,7 +226,7 @@ linux32 /bin/sh -c '%multiarch_binaries %{buildroot}%{_bindir}/libtool'
 %doc THANKS TODO ChangeLog*
 %{_bindir}/libtool
 %{_mandir}/man1/libtool.1.*
-%ifarch %biarches
+%ifarch %{biarches}
 %define alt_multiarch_bindir %(linux32 /bin/rpm --eval %%multiarch_bindir)
 %{multiarch_bindir}
 %{alt_multiarch_bindir}
@@ -250,4 +250,3 @@ linux32 /bin/sh -c '%multiarch_binaries %{buildroot}%{_bindir}/libtool'
 %{_libdir}/*.a
 %{_libdir}/*.so
 %{_libdir}/*.la
-
