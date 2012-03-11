@@ -61,6 +61,8 @@ Patch17:	libtool-2.2.6b-libltdl-install-test-fix.patch
 #       file list
 Patch18:	libtool-2.4-dryrun-sleepmore.patch
 Patch19:	libtool-2.4.2-drop-soname-for-modules.patch
+# (fwang) detect libltdl.so rather than libltdl.la, as we will delete them
+Patch20:	libtool-2.4.2-use-so-to-detect-libltdl.patch
 
 BuildRequires:	automake
 Buildrequires:	autoconf
