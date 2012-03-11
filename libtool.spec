@@ -19,7 +19,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.2
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
@@ -128,6 +128,15 @@ Development headers, and files for development from the libtool package.
 
 %configure2_5x
 %make
+
+# lame & ugly, trying to fix up relative paths that's made their way into libtool..
+DIRS=$(cat libtool|grep compiler_lib_search_dirs|grep -F ..|uniq|cut -d'"' -f2)
+PATHS=$(cat libtool|grep compiler_lib_search_path|grep -F ..|uniq|cut -d'"' -f2)
+for i in $DIRS; do pushd $i; ABSOLUTE="$ABSOLUTE $PWD"; popd; done
+ABSOLUTE=$(echo $ABSOLUTE | sed -e 's#%{_libdir} /%{_lib}#/%{_lib}#g' -e 's#%{_libdir} %{_libdir}#%{_libdir}#g')
+sed -e "s#compiler_lib_search_dirs=\"$DIRS\"#compiler_lib_search_dirs=\"$ABSOLUTE\"#g" -i libtool
+for i in $ABSOLUTE; do SEARCH=$(echo $SEARCH -L$i); done
+sed -e "s#compiler_lib_search_path=\"$PATHS\"#compiler_lib_search_path=\"$SEARCH\"#g" -i libtool
 
 #%%check
 #pushd    build-%{_target_cpu}-%{_target_os}
