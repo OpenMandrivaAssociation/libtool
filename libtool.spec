@@ -169,7 +169,7 @@ sed -i -e 's/^\(predep_objects\)=.*/\1=""/' \
 #popd
 
 %install
-%makeinstall_std -C build-%{_target_cpu}-%{_target_os}
+%makeinstall_std
 
 sed -e "s,@prefix@,%{_prefix}," -e "s,@datadir@,%{_datadir}," %{SOURCE2} \
   > %{buildroot}%{_bindir}/cputoolize
