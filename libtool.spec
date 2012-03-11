@@ -59,8 +59,6 @@ Patch20:	libtool-2.4.2-use-so-to-detect-libltdl.patch
 
 BuildRequires:	automake
 Buildrequires:	autoconf
-# For test 37 to succeed
-Buildrequires:	locales-de
 %if ! %{with bootstrap}
 BuildRequires:	gcc-gfortran
 %endif
