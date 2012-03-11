@@ -142,18 +142,6 @@ Development headers, and files for development from the libtool package.
 %configure2_5x
 %make
 
-# Do not use -nostdlib to build libraries, and so no need to hardcode gcc path (mdvbz#44616)
-# (taken from debian, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=206356)
-# ([PIX] this is not done as a patch since the patch would be too big to maintain)
-sed -i -e 's/^\(predep_objects\)=.*/\1=""/' \
-       -e 's/^\(postdep_objects\)=.*/\1=""/' \
-       -e 's/^\(compiler_lib_search_path\)=.*/\1=""/' \
-       -e 's:^\(sys_lib_search_path_spec\)=.*:\1="/lib/ /usr/lib/ /usr/X11R6/lib/ /usr/local/lib/":' \
-       -e 's/^\(archive_cmds=\".*\) -nostdlib /\1 /' \
-       -e 's/^\(archive_expsym_cmds=\".*\) -nostdlib /\1 /' \
-       libtool
-# should "compiler_lib_search_dirs" be cleaned too?
-
 #%%check
 #pushd    build-%{_target_cpu}-%{_target_os}
 #set +x
