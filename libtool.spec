@@ -160,7 +160,7 @@ Development headers, and files for development from the libtool package.
 %_remove_install_info %{name}.info
 
 %files
-%doc AUTHORS INSTALL NEWS README
+%doc AUTHORS NEWS README
 %doc THANKS TODO ChangeLog*
 %{_bindir}/libtool
 %{_mandir}/man1/libtool.1.*
