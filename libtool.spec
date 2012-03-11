@@ -7,7 +7,7 @@
 %define _disable_ld_as_needed 1
 
 # allow --with bootstrap
-%bcond_with bootstrap
+%bcond_with	bootstrap
 
 %define arch_has_java 1
 %ifarch %{arm} %{mips}
@@ -138,7 +138,7 @@ Development headers, and files for development from the libtool package.
 %define __cputoolize /bin/true
 
 %configure2_5x
-make
+%make
 
 # Do not use -nostdlib to build libraries, and so no need to hardcode gcc path (mdvbz#44616)
 # (taken from debian, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=206356)
