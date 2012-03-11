@@ -34,10 +34,6 @@ Source1:	%{SOURCE0}.sig
 # (cf http://lists.mandriva.com/cooker-amd64/2003-12/msg00046.php)
 # but is not needed anymore since Sept 2003 change in rpm "Make "x86_64" the
 # canonical arch on amd64"
-#
-# since Jan 2009, the script doesn't use --config-only anymore since support
-# for --config-only in libtoolize has been dropped
-Source2:	libtool-cputoolize.sh
 
 # (Abel) Patches please only modify ltmain.in and don't touch ltmain.sh
 # otherwise ltmain.sh will not be regenerated, and patches will be lost
@@ -90,8 +86,6 @@ should install libtool.
 Group:		Development/C
 Summary:	Basic package for %{name}
 Requires:	file
-# cputoolize uses sed
-Requires: 	sed
 Requires(post):	info-install
 Requires(preun):info-install
 
@@ -159,10 +153,6 @@ Development headers, and files for development from the libtool package.
 %install
 %makeinstall_std
 
-sed -e "s,@prefix@,%{_prefix}," -e "s,@datadir@,%{_datadir}," %{SOURCE2} \
-  > %{buildroot}%{_bindir}/cputoolize
-chmod 755 %{buildroot}%{_bindir}/cputoolize
-
 %post base
 %_install_info %{name}.info
 
@@ -176,7 +166,6 @@ chmod 755 %{buildroot}%{_bindir}/cputoolize
 %{_mandir}/man1/libtool.1.*
 
 %files base
-%{_bindir}/cputoolize
 %{_bindir}/libtoolize
 %{_mandir}/man1/libtoolize.*
 %{_infodir}/libtool.info*
