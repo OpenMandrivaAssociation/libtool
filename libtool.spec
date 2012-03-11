@@ -17,18 +17,6 @@
 %define arch_has_java 0
 %endif
 
-# define biarch platforms
-%define biarches x86_64 ppc64 sparc64
-%ifarch x86_64
-%define alt_arch i586
-%endif
-%ifarch ppc64
-%define alt_arch ppc
-%endif
-%ifarch sparc64
-%define alt_arch sparc
-%endif
-
 %define fortran_compiler gfortran
 
 Summary:	The GNU libtool, which simplifies the use of shared libraries
@@ -74,9 +62,6 @@ Patch17:	libtool-2.2.6b-libltdl-install-test-fix.patch
 Patch18:	libtool-2.4-dryrun-sleepmore.patch
 Patch19:	libtool-2.4.2-drop-soname-for-modules.patch
 
-%ifarch %{biarches}
-BuildRequires:	linux32
-%endif
 BuildRequires:	automake
 Buildrequires:	autoconf
 # For test 37 to succeed
@@ -152,20 +137,7 @@ Development headers, and files for development from the libtool package.
 # And don't overwrite config.{sub,guess} in this package as well -- Abel
 %define __cputoolize /bin/true
 
-# build alt-arch libtool first
-# NOTE: don't bother to make libtool biarch capable within the same
-# "binary", use the multiarch facility to dispatch to the right script.
-%ifarch %{biarches}
-mkdir -p build-%{alt_arch}-%{_target_os}
-pushd    build-%{alt_arch}-%{_target_os}
-CONFIGURE_TOP=.. linux32 sh -c "`linux32 rpm -E %%configure2_5x`" #../configure --prefix=%{_prefix} --build=%{alt_arch}-%{_real_vendor}-%{_target_os}%{?_gnu}
-linux32 make
-popd
-%endif
-
-mkdir -p build-%{_target_cpu}-%{_target_os}
-pushd    build-%{_target_cpu}-%{_target_os}
-CONFIGURE_TOP=.. %configure2_5x
+%configure2_5x
 make
 
 # Do not use -nostdlib to build libraries, and so no need to hardcode gcc path (mdvbz#44616)
@@ -179,8 +151,6 @@ sed -i -e 's/^\(predep_objects\)=.*/\1=""/' \
        -e 's/^\(archive_expsym_cmds=\".*\) -nostdlib /\1 /' \
        libtool
 # should "compiler_lib_search_dirs" be cleaned too?
-
-popd
 
 #%%check
 #pushd    build-%{_target_cpu}-%{_target_os}
@@ -203,14 +173,6 @@ sed -e "s,@prefix@,%{_prefix}," -e "s,@datadir@,%{_datadir}," %{SOURCE2} \
   > %{buildroot}%{_bindir}/cputoolize
 chmod 755 %{buildroot}%{_bindir}/cputoolize
 
-# biarch support
-%ifarch %{biarches}
-%multiarch_binaries %{buildroot}%{_bindir}/libtool
-
-install -m 755 build-%{alt_arch}-%{_target_os}/libtool %{buildroot}%{_bindir}/libtool
-linux32 /bin/sh -c '%multiarch_binaries %{buildroot}%{_bindir}/libtool'
-%endif
-
 %post base
 %_install_info %{name}.info
 
@@ -222,11 +184,6 @@ linux32 /bin/sh -c '%multiarch_binaries %{buildroot}%{_bindir}/libtool'
 %doc THANKS TODO ChangeLog*
 %{_bindir}/libtool
 %{_mandir}/man1/libtool.1.*
-%ifarch %{biarches}
-%define alt_multiarch_bindir %(linux32 /bin/rpm --eval %%multiarch_bindir)
-%{multiarch_bindir}
-%{alt_multiarch_bindir}
-%endif
 
 %files base
 %{_bindir}/cputoolize
