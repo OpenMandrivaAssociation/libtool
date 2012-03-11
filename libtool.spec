@@ -6,7 +6,6 @@
 %define _disable_ld_no_undefined 1
 %define _disable_ld_as_needed 1
 
-# allow --with bootstrap
 %bcond_with	bootstrap
 
 %define arch_has_java 1
@@ -16,8 +15,6 @@
 %if %{with bootstrap}
 %define arch_has_java 0
 %endif
-
-%define fortran_compiler gfortran
 
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
@@ -65,7 +62,7 @@ Buildrequires:	autoconf
 # For test 37 to succeed
 Buildrequires:	locales-de
 %if ! %{with bootstrap}
-BuildRequires:	gcc-%{fortran_compiler}
+BuildRequires:	gcc-gfortran
 %endif
 %if %{arch_has_java}
 BuildRequires:	gcc-java libgcj-static-devel
@@ -103,8 +100,6 @@ should install libtool.
 Group:		Development/C
 Summary:	Shared library files for libtool
 License:	LGPLv2.1+
-# old libextractor wrongly provided its own libltdl:
-Conflicts:	%{_lib}extractor1 < 0.5.18a
 
 %description -n	%{libname}
 Shared library files for libtool DLL library from the libtool package.
