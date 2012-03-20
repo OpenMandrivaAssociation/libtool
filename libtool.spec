@@ -182,4 +182,3 @@ sed -e "s#compiler_lib_search_path=\"$PATHS\"#compiler_lib_search_path=\"$SEARCH
 %{_includedir}/*
 %{_libdir}/*.a
 %{_libdir}/*.so
-%{_libdir}/*.la
