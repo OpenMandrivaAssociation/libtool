@@ -19,7 +19,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.2
-Release:	5
+Release:	6
 License:	GPLv2+
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
@@ -81,8 +81,6 @@ should install libtool.
 Group:		Development/C
 Summary:	Basic package for %{name}
 Requires:	file
-Requires(post):	info-install
-Requires(preun):info-install
 
 %description	base
 The libtool package contains the GNU libtool, a set of shell scripts
@@ -154,12 +152,6 @@ sed -e "s#compiler_lib_search_path=\"$PATHS\"#compiler_lib_search_path=\"$SEARCH
 
 %install
 %makeinstall_std
-
-%post base
-%_install_info %{name}.info
-
-%preun base
-%_remove_install_info %{name}.info
 
 %files
 %doc AUTHORS NEWS README THANKS TODO
