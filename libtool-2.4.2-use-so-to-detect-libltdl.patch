@@ -1,0 +1,24 @@
+--- libtool-2.4.2/libltdl/m4/ltdl.m4.0020~	2012-03-11 01:04:53.942708873 +0100
++++ libtool-2.4.2/libltdl/m4/ltdl.m4	2012-03-11 01:05:54.111773640 +0100
+@@ -166,7 +166,7 @@ case $enable_ltdl_install in
+       ;;
+   *)  enable_ltdl_install=yes
+       ac_configure_args="$ac_configure_args --enable-ltdl-install"
+-      LIBLTDL='_LT_BUILD_PREFIX'"${lt_ltdl_dir+$lt_ltdl_dir/}libltdl.la"
++      LIBLTDL='_LT_BUILD_PREFIX'"${lt_ltdl_dir+$lt_ltdl_dir/}libltdl.so"
+       LTDLDEPS=$LIBLTDL
+       LTDLINCL='-I${top_srcdir}'"${lt_ltdl_dir+/$lt_ltdl_dir}"
+       ;;
+@@ -273,10 +273,10 @@ fi
+ 
+ AC_ARG_WITH([ltdl_lib],
+     [AS_HELP_STRING([--with-ltdl-lib=DIR],
+-                    [use the libltdl.la installed in DIR])])
++                    [use the libltdl.so installed in DIR])])
+ 
+ if test -n "$with_ltdl_lib"; then
+-  if test -f "$with_ltdl_lib/libltdl.la"; then :
++  if test -f "$with_ltdl_lib/libltdl.so"; then :
+   else
+     AC_MSG_ERROR([invalid ltdl library directory: `$with_ltdl_lib'])
+   fi
