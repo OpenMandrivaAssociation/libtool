@@ -61,7 +61,8 @@ Patch18:	libtool-2.4-dryrun-sleepmore.patch
 Patch20:	libtool-2.4.2-use-so-to-detect-libltdl.patch
 
 BuildRequires:	automake
-Buildrequires:	autoconf
+BuildRequires:	autoconf
+BuildRequires:	help2man
 %if ! %{with bootstrap}
 BuildRequires:	gcc-gfortran
 %endif
