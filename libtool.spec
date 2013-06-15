@@ -20,7 +20,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.2
-Release:	10
+Release:	11
 License:	GPLv2+
 Group:		Development/Other
 URL:		http://www.gnu.org/software/libtool/libtool.html
@@ -65,6 +65,9 @@ BuildRequires:	autoconf
 BuildRequires:	help2man
 %if ! %{with bootstrap}
 BuildRequires:	gcc-gfortran
+%ifarch ia64 %ix86 x86_64
+BuildRequires:	quadmath-devel
+%endif
 %endif
 %if %{arch_has_java}
 BuildRequires:	gcc-java
