@@ -26,6 +26,7 @@ Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
 Source0:	ftp://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.xz
 Source1:	%{SOURCE0}.sig
+Source2:	libtool.rpmlintrc
 # deprecated: introduced in July 2003
 # (cf http://lists.mandriva.com/cooker-amd64/2003-12/msg00046.php)
 # but is not needed anymore since Sept 2003 change in rpm "Make "x86_64" the
