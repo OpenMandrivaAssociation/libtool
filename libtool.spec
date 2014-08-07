@@ -68,7 +68,7 @@ BuildRequires:	quadmath-devel
 %endif
 %if %{arch_has_java}
 BuildRequires:	gcc-java
-BuildRequires:	pkgconfig(libgcj-4.8)
+BuildRequires:	pkgconfig(libgcj-4.9)
 %endif
 Requires:	%{name}-base = %{EVRD}
 
