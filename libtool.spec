@@ -130,7 +130,7 @@ Development headers, and files for development from the libtool package.
 # And don't overwrite config.{sub,guess} in this package as well -- Abel
 %define __cputoolize /bin/true
 
-%configure2_5x --disable-static
+%configure --disable-static
 %make
 
 # lame & ugly, trying to fix up relative paths that's made their way into libtool..
@@ -138,9 +138,9 @@ DIRS=$(cat libtool|grep compiler_lib_search_dirs|grep -F ..|uniq|cut -d'"' -f2)
 PATHS=$(cat libtool|grep compiler_lib_search_path|grep -F ..|uniq|cut -d'"' -f2)
 for i in $DIRS; do pushd $i; ABSOLUTE="$ABSOLUTE $PWD"; popd; done
 ABSOLUTE=$(echo $ABSOLUTE | sed -e 's#%{_libdir} /%{_lib}#/%{_lib}#g' -e 's#%{_libdir} %{_libdir}#%{_libdir}#g')
-sed -e "s#compiler_lib_search_dirs=\"$DIRS\"#compiler_lib_search_dirs=\"$ABSOLUTE\"#g" -i libtool
+sed -e 's#compiler_lib_search_dirs=\"$DIRS\"#compiler_lib_search_dirs=\"$ABSOLUTE\"#g' -i libtool
 for i in $ABSOLUTE; do SEARCH=$(echo $SEARCH -L$i); done
-sed -e "s#compiler_lib_search_path=\"$PATHS\"#compiler_lib_search_path=\"$SEARCH\"#g" -i libtool
+sed -e 's#compiler_lib_search_path=\"$PATHS\"#compiler_lib_search_path=\"$SEARCH\"#g' -i libtool
 
 #%%check
 #pushd    build-%{_target_cpu}-%{_target_os}
