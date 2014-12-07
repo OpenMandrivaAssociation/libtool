@@ -20,7 +20,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.2
-Release:	18
+Release:	19
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
