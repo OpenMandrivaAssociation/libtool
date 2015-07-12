@@ -1,5 +1,14 @@
---- libtool-2.4.2/libltdl/m4/ltdl.m4.0020~	2012-03-11 01:04:53.942708873 +0100
-+++ libtool-2.4.2/libltdl/m4/ltdl.m4	2012-03-11 01:05:54.111773640 +0100
+--- libtool-2.4.6/m4/ltdl.m4.0020~	2015-07-12 16:21:29.308057047 +0200
++++ libtool-2.4.6/m4/ltdl.m4	2015-07-12 16:22:28.481672449 +0200
+@@ -95,7 +95,7 @@ m4_defun([_LTDL_CONVENIENCE],
+   "") enable_ltdl_convenience=yes
+       ac_configure_args="$ac_configure_args --enable-ltdl-convenience" ;;
+ esac
+-LIBLTDL='_LT_BUILD_PREFIX'"${lt_ltdl_dir+$lt_ltdl_dir/}libltdlc.la"
++LIBLTDL='_LT_BUILD_PREFIX'"${lt_ltdl_dir+$lt_ltdl_dir/}libltdlc.so"
+ LTDLDEPS=$LIBLTDL
+ LTDLINCL='-I$(top_srcdir)'"${lt_ltdl_dir+/$lt_ltdl_dir}"
+ 
 @@ -166,7 +166,7 @@ case $enable_ltdl_install in
        ;;
    *)  enable_ltdl_install=yes
@@ -7,7 +16,7 @@
 -      LIBLTDL='_LT_BUILD_PREFIX'"${lt_ltdl_dir+$lt_ltdl_dir/}libltdl.la"
 +      LIBLTDL='_LT_BUILD_PREFIX'"${lt_ltdl_dir+$lt_ltdl_dir/}libltdl.so"
        LTDLDEPS=$LIBLTDL
-       LTDLINCL='-I${top_srcdir}'"${lt_ltdl_dir+/$lt_ltdl_dir}"
+       LTDLINCL='-I$(top_srcdir)'"${lt_ltdl_dir+/$lt_ltdl_dir}"
        ;;
 @@ -273,10 +273,10 @@ fi
  
@@ -20,5 +29,5 @@
 -  if test -f "$with_ltdl_lib/libltdl.la"; then :
 +  if test -f "$with_ltdl_lib/libltdl.so"; then :
    else
-     AC_MSG_ERROR([invalid ltdl library directory: `$with_ltdl_lib'])
+     AC_MSG_ERROR([invalid ltdl library directory: '$with_ltdl_lib'])
    fi

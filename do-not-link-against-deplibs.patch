@@ -1,29 +1,20 @@
-Do not link against deplibs.  This is not needed for shared libs
-on atleast ELF systems since those already know which libs they
-need themself.  This seems to break a few things and will be fixed
-in a better way in a future upstream version.
-
-from debian, cf http://wiki.mandriva.com/en/Overlinking
-
-diff -p -up libtool-2.4/libltdl/config/ltmain.m4sh.overlinking libtool-2.4/libltdl/config/ltmain.m4sh
---- libtool-2.4/libltdl/config/ltmain.m4sh.overlinking	2010-11-25 21:24:12.238339082 +0100
-+++ libtool-2.4/libltdl/config/ltmain.m4sh	2010-11-25 21:24:12.268338244 +0100
-@@ -5325,7 +5325,10 @@ func_mode_link ()
+--- libtool-2.4.6/build-aux/ltmain.in.0012~	2015-07-12 16:08:21.127560720 +0200
++++ libtool-2.4.6/build-aux/ltmain.in	2015-07-12 16:10:25.849263536 +0200
+@@ -5657,7 +5657,10 @@ func_mode_link ()
  	case $pass in
- 	dlopen) libs="$dlfiles" ;;
- 	dlpreopen) libs="$dlprefiles" ;;
+ 	dlopen) libs=$dlfiles ;;
+ 	dlpreopen) libs=$dlprefiles ;;
 -	link) libs="$deplibs %DEPLIBS% $dependency_libs" ;;
 +	link)
-+	  libs="$deplibs %DEPLIBS%"
-+	  test "X$link_all_deplibs" != Xno && libs="$libs $dependency_libs"
-+	  ;;
++          libs="$deplibs %DEPLIBS%"
++          test "X$link_all_deplibs" != Xno && libs="$libs $dependency_libs"
++          ;;
  	esac
        fi
-       if test "$linkmode,$pass" = "lib,dlpreopen"; then
-diff -p -up libtool-2.4/libltdl/m4/libtool.m4.overlinking libtool-2.4/libltdl/m4/libtool.m4
---- libtool-2.4/libltdl/m4/libtool.m4.overlinking	2010-11-25 21:35:38.855157019 +0100
-+++ libtool-2.4/libltdl/m4/libtool.m4	2010-11-25 21:35:11.720915080 +0100
-@@ -4517,6 +4517,9 @@ m4_if([$1], [CXX], [
+       if test lib,dlpreopen = "$linkmode,$pass"; then
+--- libtool-2.4.6/m4/libtool.m4.0012~	2015-07-12 16:08:21.121560787 +0200
++++ libtool-2.4.6/m4/libtool.m4	2015-07-12 16:12:24.857153361 +0200
+@@ -4939,6 +4939,9 @@ m4_if([$1], [CXX], [
        ;;
      esac
      ;;
@@ -33,19 +24,19 @@ diff -p -up libtool-2.4/libltdl/m4/libtool.m4.overlinking libtool-2.4/libltdl/m4
    *)
      _LT_TAGVAR(export_symbols_cmds, $1)='$NM $libobjs $convenience | $global_symbol_pipe | $SED '\''s/.* //'\'' | sort | uniq > $export_symbols'
      ;;
-@@ -4979,6 +4982,7 @@ _LT_EOF
- 	if test "$aix_use_runtimelinking" = yes; then
- 	  shared_flag="$shared_flag "'${wl}-G'
- 	fi
-+	_LT_TAGVAR(link_all_deplibs, $1)=no
+@@ -5468,6 +5471,7 @@ _LT_EOF
+ 	# /with/ Import File - we do not want to mix them.
+ 	shared_flag_aix='-shared'
+ 	shared_flag_svr4='-shared $wl-G'
++        _LT_TAGVAR(link_all_deplibs, $1)=no
        else
  	# not using gcc
- 	if test "$host_cpu" = ia64; then
-@@ -5984,6 +5988,7 @@ if test "$_lt_caught_CXX_error" != yes;
- 	  if test "$aix_use_runtimelinking" = yes; then
- 	    shared_flag="$shared_flag "'${wl}-G'
- 	  fi
-+	  _LT_TAGVAR(link_all_deplibs, $1)=no
+ 	if test ia64 = "$host_cpu"; then
+@@ -6538,6 +6542,7 @@ if test yes != "$_lt_caught_CXX_error";
+ 	  # /with/ Import File - we do not want to mix them.
+ 	  shared_flag_aix='-shared'
+ 	  shared_flag_svr4='-shared $wl-G'
++          _LT_TAGVAR(link_all_deplibs, $1)=no
          else
            # not using gcc
-           if test "$host_cpu" = ia64; then
+           if test ia64 = "$host_cpu"; then

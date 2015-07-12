@@ -1,7 +1,6 @@
-diff -p -up libtool-2.4/libltdl/m4/libtool.m4.gcj-no-cflags libtool-2.4/libltdl/m4/libtool.m4
---- libtool-2.4/libltdl/m4/libtool.m4.gcj-no-cflags	2010-11-25 21:40:08.876613411 +0100
-+++ libtool-2.4/libltdl/m4/libtool.m4	2010-11-25 21:42:39.424407085 +0100
-@@ -7397,10 +7397,6 @@ lt_simple_link_test_code='public class c
+--- libtool-2.4.6/m4/libtool.m4.0016~	2015-07-12 16:18:14.071391059 +0200
++++ libtool-2.4.6/m4/libtool.m4	2015-07-12 16:18:50.376134303 +0200
+@@ -7955,10 +7955,6 @@ lt_simple_link_test_code='public class c
  # ltmain only uses $CC for tagged configurations so make sure $CC is set.
  _LT_TAG_COMPILER
  
@@ -12,8 +11,8 @@ diff -p -up libtool-2.4/libltdl/m4/libtool.m4.gcj-no-cflags libtool-2.4/libltdl/
  # Allow CC to be a program name with arguments.
  lt_save_CC=$CC
  lt_save_CFLAGS=$CFLAGS
-@@ -7413,6 +7409,13 @@ _LT_TAGVAR(compiler, $1)=$CC
- _LT_TAGVAR(LD, $1)="$LD"
+@@ -7971,6 +7967,13 @@ _LT_TAGVAR(compiler, $1)=$CC
+ _LT_TAGVAR(LD, $1)=$LD
  _LT_CC_BASENAME([$compiler])
  
 +ac_compile='$CC -c $GCJFLAGS conftest.$ac_ext >&AS_MESSAGE_LOG_FD'

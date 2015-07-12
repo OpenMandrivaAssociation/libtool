@@ -6,6 +6,8 @@
 # for the testsuite:
 %define _disable_ld_no_undefined 1
 %define _disable_ld_as_needed 1
+# LTO kills the lt_libltdl_LTX_preloaded_symbols symbol
+%define _disable_lto 1
 
 %bcond_with	bootstrap
 
@@ -19,8 +21,8 @@
 
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
-Version:	2.4.2
-Release:	19
+Version:	2.4.6
+Release:	1
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
@@ -52,9 +54,6 @@ Patch16:	libtool-2.2.6-use-gcjflags-for-gcj.patch
 # (cjw) in the libltdl install test, use --enable-ltdl-install to make sure 
 #       the library is built even if it is installed on the system
 Patch17:	libtool-2.2.6b-libltdl-install-test-fix.patch
-# (cjw) mdemo-dryrun test may fail because file sizes are incorrect in 'before' 
-#       file list
-Patch18:	libtool-2.4-dryrun-sleepmore.patch
 #Patch19:	libtool-2.4.2-drop-soname-for-modules.patch
 # (fwang) detect libltdl.so rather than libltdl.la, as we will delete them
 Patch20:	libtool-2.4.2-use-so-to-detect-libltdl.patch
@@ -68,7 +67,7 @@ BuildRequires:	quadmath-devel
 %endif
 %if %{arch_has_java}
 BuildRequires:	gcc-java
-BuildRequires:	pkgconfig(libgcj-4.9)
+BuildRequires:	pkgconfig(libgcj-5)
 %endif
 Requires:	%{name}-base = %{EVRD}
 
@@ -121,7 +120,7 @@ Development headers, and files for development from the libtool package.
 %prep
 %setup -q
 %apply_patches
-./bootstrap
+#./bootstrap --force
 
 %build
 # don't use configure macro - it forces libtoolize, which is bad -jgarzik
@@ -159,6 +158,10 @@ sed -e 's#compiler_lib_search_path=\"$PATHS\"#compiler_lib_search_path=\"$SEARCH
 %install
 %makeinstall_std
 
+# Let's retain compatibility with pathname hardcodes from earlier...
+mv %{buildroot}%{_datadir}/libtool/build-aux %{buildroot}%{_datadir}/libtool/config
+ln -s config %{buildroot}%{_datadir}/libtool/build-aux
+
 %files
 %doc AUTHORS NEWS README THANKS TODO
 %{_bindir}/libtool
@@ -176,7 +179,6 @@ sed -e 's#compiler_lib_search_path=\"$PATHS\"#compiler_lib_search_path=\"$SEARCH
 
 %files -n %{devname}
 %doc libltdl/README
-%doc tests/demo
 %{_includedir}/*
 %{_libdir}/*.so
 
