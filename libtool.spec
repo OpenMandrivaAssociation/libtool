@@ -8,6 +8,7 @@
 %define _disable_ld_as_needed 1
 # LTO kills the lt_libltdl_LTX_preloaded_symbols symbol
 %define _disable_lto 1
+%define _disable_rebuild_configure 1
 
 %bcond_with	bootstrap
 
