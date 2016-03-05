@@ -10,7 +10,7 @@
 %define _disable_lto 1
 %define _disable_rebuild_configure 1
 
-%bcond_with	bootstrap
+%bcond_without bootstrap
 
 %define arch_has_java 1
 %ifarch %{arm} %{mips}
@@ -23,13 +23,12 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.6
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
 Source0:	http://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.xz
-Source1:	%{SOURCE0}.sig
-Source2:	libtool.rpmlintrc
+Source1:	libtool.rpmlintrc
 # deprecated: introduced in July 2003
 # (cf http://lists.mandriva.com/cooker-amd64/2003-12/msg00046.php)
 # but is not needed anymore since Sept 2003 change in rpm "Make "x86_64" the
