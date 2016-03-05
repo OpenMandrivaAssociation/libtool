@@ -10,7 +10,7 @@
 %define _disable_lto 1
 %define _disable_rebuild_configure 1
 
-%bcond_without bootstrap
+%bcond_with bootstrap
 
 %define arch_has_java 1
 %ifarch %{arm} %{mips}
