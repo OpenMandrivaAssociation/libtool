@@ -12,14 +12,6 @@
 
 %bcond_with bootstrap
 
-%define arch_has_java 1
-%ifarch %{arm} %{mips}
-%define arch_has_java 0
-%endif
-%if %{with bootstrap}
-%define arch_has_java 0
-%endif
-
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.6
@@ -67,10 +59,6 @@ BuildRequires:	gcc-gfortran
 %ifarch ia64 %ix86 x86_64
 BuildRequires:	quadmath-devel
 %endif
-%endif
-%if %{arch_has_java}
-BuildRequires:	gcc-java
-BuildRequires:	pkgconfig(libgcj-5)
 %endif
 Requires:	%{name}-base = %{EVRD}
 
