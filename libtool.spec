@@ -23,7 +23,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.6
-Release:	4
+Release:	5
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
@@ -46,6 +46,9 @@ Patch1:		libtool-2.2.10-rpath.patch
 Patch2:		ltmain-SED.patch
 # (abondrov) pass -fuse-ld= flag to allow switching between bfd and gold
 Patch3:		libtool-2.4.2-fuse-ld.patch
+# (bero) any compiler actually worth using (definitely including clang and gcc)
+# knows better than libtool what its standard libraries are.
+Patch4:		libtool-2.4.6-no-bogus-nostdlib.patch
 Patch12:	do-not-link-against-deplibs.patch
 Patch13:	drop-ld-no-undefined-for-shared-lib-modules.patch
 Patch14:	fix-checking-libltdl-is-installed-installable.patch
