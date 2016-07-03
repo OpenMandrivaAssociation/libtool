@@ -1,7 +1,7 @@
 %define libname_orig libltdl
-%define major	7
-%define libname	%mklibname ltdl %{major}
-%define devname	%mklibname -d ltdl
+%define major 7
+%define libname %mklibname ltdl %{major}
+%define devname %mklibname -d ltdl
 
 # for the testsuite:
 %define _disable_ld_no_undefined 1
@@ -172,4 +172,3 @@ ln -s config %{buildroot}%{_datadir}/libtool/build-aux
 %doc libltdl/README
 %{_includedir}/*
 %{_libdir}/*.so
-
