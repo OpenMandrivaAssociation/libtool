@@ -71,6 +71,7 @@ Patch130:	0030-libtool-set-file_list_spec-to-on-OS-2.patch
 Patch132:	0032-libltdl-handle-ENOMEM-in-lt_dlloader_remove.patch
 
 BuildRequires:	help2man
+BuildRequires:	texinfo
 %if ! %{with bootstrap}
 BuildRequires:	gcc-gfortran
 %ifarch ia64 %ix86 x86_64
