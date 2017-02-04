@@ -1,0 +1,30 @@
+From b5d44b8447039671ad927ec4b5018ba2816331eb Mon Sep 17 00:00:00 2001
+From: Pavel Raiskup <praiskup@redhat.com>
+Date: Fri, 12 Feb 2016 16:03:14 +0100
+Subject: [PATCH 22/32] libltdl: handle ENOMEM sooner
+
+Fixes bug#19890.  Reported by Tobias Stoeckmann.
+
+* libltdl/loaders/dld_link.c (vm_open): Do not even try dld_link()
+in case of ENOMEM.
+---
+ NO-THANKS                  | 1 +
+ libltdl/loaders/dld_link.c | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/libltdl/loaders/dld_link.c b/libltdl/loaders/dld_link.c
+index a73880f..0edf0df 100644
+--- a/libltdl/loaders/dld_link.c
++++ b/libltdl/loaders/dld_link.c
+@@ -112,7 +112,7 @@ vm_open (lt_user_data loader_data LT__UNUSED, const char *filename,
+ {
+   lt_module module = lt__strdup (filename);
+ 
+-  if (dld_link (filename) != 0)
++  if (module && dld_link (filename) != 0)
+     {
+       LT__SETERROR (CANNOT_OPEN);
+       FREE (module);
+-- 
+2.8.3
+

@@ -1,7 +1,7 @@
 %define libname_orig libltdl
-%define major	7
-%define libname	%mklibname ltdl %{major}
-%define devname	%mklibname -d ltdl
+%define major 7
+%define libname %mklibname ltdl %{major}
+%define devname %mklibname -d ltdl
 
 # for the testsuite:
 %define _disable_ld_no_undefined 1
@@ -15,7 +15,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.6
-Release:	5
+Release:	6
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
@@ -36,8 +36,6 @@ Patch0:		relink.patch
 #
 Patch1:		libtool-2.2.10-rpath.patch
 Patch2:		ltmain-SED.patch
-# (abondrov) pass -fuse-ld= flag to allow switching between bfd and gold
-Patch3:		libtool-2.4.2-fuse-ld.patch
 # (bero) any compiler actually worth using (definitely including clang and gcc)
 # knows better than libtool what its standard libraries are.
 Patch4:		libtool-2.4.6-no-bogus-nostdlib.patch
@@ -53,7 +51,27 @@ Patch17:	libtool-2.2.6b-libltdl-install-test-fix.patch
 # (fwang) detect libltdl.so rather than libltdl.la, as we will delete them
 Patch20:	libtool-2.4.2-use-so-to-detect-libltdl.patch
 
+# (tpg) upstream git
+Patch100:	0000-libtool-fix-GCC-linking-with-specs.patch
+Patch101:	0001-bootstrap-fix-race-in-temporary-Makefile.patch
+Patch105:	0005-libool.m4-add-ARFLAGS-variable.patch
+Patch106:	0006-ARFLAGS-use-cr-instead-of-cru-by-default.patch
+Patch107:	0007-maint-relax-sc_prohibit_test_dollar-check.patch
+Patch113:	0013-gl-tests-new-tests-for-func_quote-family.patch
+Patch114:	0014-syntax-check-fix-sed-syntax-errors.patch
+Patch117:	0017-m4-libtool.m4-export-AIX-TLS-symbols.patch
+Patch118:	0018-gl-tests-make-the-failure-more-readable.patch
+Patch119:	0019-libtool-fix-GCC-clang-linking-with-fsanitize.patch
+Patch122:	0022-libltdl-handle-ENOMEM-sooner.patch
+Patch126:	0026-libtoolize-exec-automake-and-autoconf-only-with-help.patch
+Patch127:	0027-m4-libtool.m4-FreeBSD-elftoolchain-strip-support.patch
+Patch128:	0028-libtool-pass-through-fuse-ld-flags.patch
+Patch129:	0029-tests-fix-objdir-hardcoding-check-with-CFLAGS-g3.patch
+Patch130:	0030-libtool-set-file_list_spec-to-on-OS-2.patch
+Patch132:	0032-libltdl-handle-ENOMEM-in-lt_dlloader_remove.patch
+
 BuildRequires:	help2man
+BuildRequires:	texinfo
 %if ! %{with bootstrap}
 BuildRequires:	gcc-gfortran
 %ifarch ia64 %ix86 x86_64
@@ -172,4 +190,3 @@ ln -s config %{buildroot}%{_datadir}/libtool/build-aux
 %doc libltdl/README
 %{_includedir}/*
 %{_libdir}/*.so
-
