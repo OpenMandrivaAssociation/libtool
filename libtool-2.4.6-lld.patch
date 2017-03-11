@@ -1,0 +1,74 @@
+--- libtool-2.4.6/m4/libtool.m4.omv~	2017-03-11 17:57:43.826096473 +0100
++++ libtool-2.4.6/m4/libtool.m4	2017-03-11 17:59:37.067007802 +0100
+@@ -3324,7 +3324,7 @@ AC_CACHE_VAL(lt_cv_path_LD,
+       # but apparently some variants of GNU ld only accept -v.
+       # Break only if it was the GNU/non-GNU ld that we prefer.
+       case `"$lt_cv_path_LD" -v 2>&1 </dev/null` in
+-      *GNU* | *'with BFD'*)
++      *GNU* | *'with BFD'* | *LLD*)
+ 	test no != "$with_gnu_ld" && break
+ 	;;
+       *)
+@@ -3364,7 +3364,7 @@ m4_defun([_LT_PATH_LD_GNU],
+ [AC_CACHE_CHECK([if the linker ($LD) is GNU ld], lt_cv_prog_gnu_ld,
+ [# I'd rather use --version here, but apparently some GNU lds only accept -v.
+ case `$LD -v 2>&1 </dev/null` in
+-*GNU* | *'with BFD'*)
++*GNU* | *'with BFD'* | *LLD*)
+   lt_cv_prog_gnu_ld=yes
+   ;;
+ *)
+@@ -5116,7 +5116,7 @@ _LT_EOF
+       ;;
+ 
+     beos*)
+-      if $LD --help 2>&1 | $GREP ': supported targets:.* elf' > /dev/null; then
++      if $LD --help 2>&1 | $GREP '(: lld|: supported targets:.* elf)' > /dev/null; then
+ 	_LT_TAGVAR(allow_undefined_flag, $1)=unsupported
+ 	# Joseph Beckenbach <jrb3@best.com> says some releases of gcc
+ 	# support --undefined.  This deserves some investigation.  FIXME
+@@ -5209,7 +5209,7 @@ _LT_EOF
+ 	  diet\ *) tmp_diet=yes;;	# linux-dietlibc with static linking (!diet-dyn)
+ 	esac
+       fi
+-      if $LD --help 2>&1 | $EGREP ': supported targets:.* elf' > /dev/null \
++      if $LD --help 2>&1 | $EGREP '(: lld|: supported targets:.* elf)' > /dev/null \
+ 	 && test no = "$tmp_diet"
+       then
+ 	tmp_addflag=' $pic_flag'
+@@ -5304,7 +5304,7 @@ _LT_EOF
+ *** used, and then restart.
+ 
+ _LT_EOF
+-      elif $LD --help 2>&1 | $GREP ': supported targets:.* elf' > /dev/null; then
++      elif $LD --help 2>&1 | $EGREP '(: lld|: supported targets:.* elf)' > /dev/null; then
+ 	_LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag $libobjs $deplibs $compiler_flags $wl-soname $wl$soname -o $lib'
+ 	_LT_TAGVAR(archive_expsym_cmds, $1)='$CC -shared $pic_flag $libobjs $deplibs $compiler_flags $wl-soname $wl$soname $wl-retain-symbols-file $wl$export_symbols -o $lib'
+       else
+@@ -5332,7 +5332,7 @@ _LT_EOF
+ 	  # use absolute paths for naming shared libraries, and exclude the
+ 	  # DT_RUNPATH tag from executables and libraries.  But doing so
+ 	  # requires that you compile everything twice, which is a pain.
+-	  if $LD --help 2>&1 | $GREP ': supported targets:.* elf' > /dev/null; then
++	  if $LD --help 2>&1 | $GREP '(: lld|: supported targets:.* elf)' > /dev/null; then
+ 	    _LT_TAGVAR(hardcode_libdir_flag_spec, $1)='$wl-rpath $wl$libdir'
+ 	    _LT_TAGVAR(archive_cmds, $1)='$CC -shared $libobjs $deplibs $compiler_flags $wl-soname $wl$soname -o $lib'
+ 	    _LT_TAGVAR(archive_expsym_cmds, $1)='$CC -shared $libobjs $deplibs $compiler_flags $wl-soname $wl$soname $wl-retain-symbols-file $wl$export_symbols -o $lib'
+@@ -5351,7 +5351,7 @@ _LT_EOF
+       ;;
+ 
+     *)
+-      if $LD --help 2>&1 | $GREP ': supported targets:.* elf' > /dev/null; then
++      if $LD --help 2>&1 | $EGREP '(: lld|: supported targets:.* elf)' > /dev/null; then
+ 	_LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag $libobjs $deplibs $compiler_flags $wl-soname $wl$soname -o $lib'
+ 	_LT_TAGVAR(archive_expsym_cmds, $1)='$CC -shared $pic_flag $libobjs $deplibs $compiler_flags $wl-soname $wl$soname $wl-retain-symbols-file $wl$export_symbols -o $lib'
+       else
+@@ -6642,7 +6642,7 @@ if test yes != "$_lt_caught_CXX_error";
+         ;;
+ 
+       beos*)
+-	if $LD --help 2>&1 | $GREP ': supported targets:.* elf' > /dev/null; then
++	if $LD --help 2>&1 | $EGREP '(: lld|: supported targets:.* elf)' > /dev/null; then
+ 	  _LT_TAGVAR(allow_undefined_flag, $1)=unsupported
+ 	  # Joseph Beckenbach <jrb3@best.com> says some releases of gcc
+ 	  # support --undefined.  This deserves some investigation.  FIXME

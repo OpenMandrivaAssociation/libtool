@@ -15,7 +15,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.6
-Release:	6
+Release:	7
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
@@ -36,6 +36,8 @@ Patch0:		relink.patch
 #
 Patch1:		libtool-2.2.10-rpath.patch
 Patch2:		ltmain-SED.patch
+# Support /usr/bin/ld == LLD
+Patch3:		libtool-2.4.6-lld.patch
 # (bero) any compiler actually worth using (definitely including clang and gcc)
 # knows better than libtool what its standard libraries are.
 Patch4:		libtool-2.4.6-no-bogus-nostdlib.patch
