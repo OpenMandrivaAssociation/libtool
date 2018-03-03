@@ -76,7 +76,7 @@ BuildRequires:	help2man
 BuildRequires:	texinfo
 %if ! %{with bootstrap}
 BuildRequires:	gcc-gfortran
-%ifarch ia64 %ix86 x86_64
+%ifarch %{ix86} x86_64
 BuildRequires:	quadmath-devel
 %endif
 %endif
@@ -92,12 +92,12 @@ libraries.
 If you are developing programs which will use shared libraries, you
 should install libtool.
 
-%package	base
+%package base
 Group:		Development/C
 Summary:	Basic package for %{name}
 Requires:	file
 
-%description	base
+%description base
 The libtool package contains the GNU libtool, a set of shell scripts
 which automatically configure UNIX and UNIX-like architectures to
 generically build shared libraries.  Libtool provides a consistent,
@@ -107,16 +107,16 @@ libraries.
 If you are developing programs which will use shared libraries, you
 should install libtool.
 
-%package -n	%{libname}
+%package -n %{libname}
 Group:		Development/C
 Summary:	Shared library files for libtool
 License:	LGPLv2.1+
 Provides:	%{libname_orig} = %{EVRD}
 
-%description -n	%{libname}
+%description -n %{libname}
 Shared library files for libtool DLL library from the libtool package.
 
-%package -n	%{devname}
+%package -n %{devname}
 Group:		Development/C
 Summary:	Development files for libtool
 License:	LGPLv2.1+
@@ -125,7 +125,7 @@ Requires:	%{libname} = %{EVRD}
 Provides:	%{name}-devel = %{EVRD}
 Provides:	%{libname_orig}-devel = %{EVRD}
 
-%description -n	%{devname}
+%description -n %{devname}
 Development headers, and files for development from the libtool package.
 
 %prep
