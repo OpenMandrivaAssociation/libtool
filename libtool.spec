@@ -130,7 +130,7 @@ Development headers, and files for development from the libtool package.
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 #./bootstrap --force
 
 %build
@@ -141,7 +141,7 @@ Development headers, and files for development from the libtool package.
 %define __cputoolize /bin/true
 
 %configure --disable-static
-%make
+%make_build
 
 # lame & ugly, trying to fix up relative paths that's made their way into libtool..
 DIRS=$(cat libtool|grep compiler_lib_search_dirs|grep -F ..|uniq|cut -d'"' -f2)
@@ -152,22 +152,22 @@ sed -e 's#compiler_lib_search_dirs=\"$DIRS\"#compiler_lib_search_dirs=\"$ABSOLUT
 for i in $ABSOLUTE; do SEARCH=$(echo $SEARCH -L$i); done
 sed -e 's#compiler_lib_search_path=\"$PATHS\"#compiler_lib_search_path=\"$SEARCH\"#g' -i libtool
 
-#%%check
-#pushd    build-%{_target_cpu}-%{_target_os}
-#set +x
-#echo ====================TESTING=========================
-#set -x
-## all tests must pass here
-## disabling icecream since some tests check the output of gcc
-#ICECC=no %make check
-#set +x
-#echo ====================TESTING END=====================
-#set -x
-#
-#popd
+%check
+cd build-%{_target_cpu}-%{_target_os}
+set +x
+echo ====================TESTING=========================
+set -x
+# all tests must pass here
+# disabling icecream since some tests check the output of gcc
+ICECC=no %make check VERBOSE=yes | tee make_check.log 2>&1 # || (cat make_check.log && false)
+set +x
+echo ====================TESTING END=====================
+set -x
+
+cd -
 
 %install
-%makeinstall_std
+%make_install
 
 # Let's retain compatibility with pathname hardcodes from earlier...
 mv %{buildroot}%{_datadir}/libtool/build-aux %{buildroot}%{_datadir}/libtool/config
