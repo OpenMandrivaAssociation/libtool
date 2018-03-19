@@ -146,14 +146,24 @@ Development headers, and files for development from the libtool package.
 # lame & ugly, trying to fix up relative paths that's made their way into libtool..
 DIRS=$(cat libtool|grep compiler_lib_search_dirs|grep -F ..|uniq|cut -d'"' -f2)
 PATHS=$(cat libtool|grep compiler_lib_search_path|grep -F ..|uniq|cut -d'"' -f2)
-for i in $DIRS; do pushd $i; ABSOLUTE="$ABSOLUTE $PWD"; popd; done
+for i in $DIRS; do cd $i; ABSOLUTE="$ABSOLUTE $PWD"; cd -; done
 ABSOLUTE=$(echo $ABSOLUTE | sed -e 's#%{_libdir} /%{_lib}#/%{_lib}#g' -e 's#%{_libdir} %{_libdir}#%{_libdir}#g')
 sed -e 's#compiler_lib_search_dirs=\"$DIRS\"#compiler_lib_search_dirs=\"$ABSOLUTE\"#g' -i libtool
 for i in $ABSOLUTE; do SEARCH=$(echo $SEARCH -L$i); done
 sed -e 's#compiler_lib_search_path=\"$PATHS\"#compiler_lib_search_path=\"$SEARCH\"#g' -i libtool
 
+# Do not use -nostdlib to build libraries, and so no need to hardcode gcc path (mdvbz#44616)
+# (taken from debian, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=206356)
+# ([PIX] this is not done as a patch since the patch would be too big to maintain)
+sed -i -e 's/^\(predep_objects\)=.*/\1=""/' \
+       -e 's/^\(postdep_objects\)=.*/\1=""/' \
+       -e 's/^\(compiler_lib_search_path\)=.*/\1=""/' \
+       -e 's:^\(sys_lib_search_path_spec\)=.*:\1="/lib/ /usr/lib/ /usr/X11R6/lib/ /usr/local/lib/":' \
+       -e 's/^\(archive_cmds=\".*\) -nostdlib /\1 /' \
+       -e 's/^\(archive_expsym_cmds=\".*\) -nostdlib /\1 /' \
+       libtool
+
 %check
-cd build-%{_target_cpu}-%{_target_os}
 set +x
 echo ====================TESTING=========================
 set -x
@@ -164,7 +174,6 @@ set +x
 echo ====================TESTING END=====================
 set -x
 
-cd -
 
 %install
 %make_install
