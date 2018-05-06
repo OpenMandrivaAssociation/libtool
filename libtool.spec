@@ -15,7 +15,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.6
-Release:	7
+Release:	8
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
@@ -71,6 +71,10 @@ Patch128:	0028-libtool-pass-through-fuse-ld-flags.patch
 Patch129:	0029-tests-fix-objdir-hardcoding-check-with-CFLAGS-g3.patch
 Patch130:	0030-libtool-set-file_list_spec-to-on-OS-2.patch
 Patch132:	0032-libltdl-handle-ENOMEM-in-lt_dlloader_remove.patch
+
+# Pass --rtlib=* to the linker unmodified
+# (must be applied after upstream patches because of conflicts)
+Patch200:	libtool-2.4.6-pass-rtlib.patch
 
 BuildRequires:	help2man
 BuildRequires:	texinfo
