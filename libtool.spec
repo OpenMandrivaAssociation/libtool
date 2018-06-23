@@ -15,7 +15,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.6
-Release:	8
+Release:	9
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
@@ -75,6 +75,9 @@ Patch132:	0032-libltdl-handle-ENOMEM-in-lt_dlloader_remove.patch
 # Pass --rtlib=* to the linker unmodified
 # (must be applied after upstream patches because of conflicts)
 Patch200:	libtool-2.4.6-pass-rtlib.patch
+# If we put something on ldflags, we mean it to get through to ld!!!
+# Just stop the insanity.
+Patch201:	libtool-2.4.6-less-insane-linker-filtering.patch
 
 BuildRequires:	help2man
 BuildRequires:	texinfo
@@ -136,6 +139,11 @@ Development headers, and files for development from the libtool package.
 %setup -q
 %autopatch -p1
 #./bootstrap --force
+cd libltdl
+autoheader
+aclocal
+automake -a
+autoconf
 
 %build
 # don't use configure macro - it forces libtoolize, which is bad -jgarzik
@@ -173,7 +181,8 @@ echo ====================TESTING=========================
 set -x
 # all tests must pass here
 # disabling icecream since some tests check the output of gcc
-ICECC=no %make check VERBOSE=yes | tee make_check.log 2>&1 # || (cat make_check.log && false)
+# Also disabling parallel make, as of 2.4.6 causes hangs on -j32 boxes
+ICECC=no make check VERBOSE=yes | tee make_check.log 2>&1 # || (cat make_check.log && false)
 set +x
 echo ====================TESTING END=====================
 set -x
