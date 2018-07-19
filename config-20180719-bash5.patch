@@ -1,0 +1,12 @@
+diff -up libtool-2.4.6/config/config.sub.omv~ libtool-2.4.6/config/config.sub
+--- libtool-2.4.6/config/config.sub.omv~	2018-07-20 00:46:03.787085712 +0200
++++ libtool-2.4.6/config/config.sub	2018-07-20 00:46:15.772816062 +0200
+@@ -114,6 +114,8 @@ esac
+ IFS="-" read -r field1 field2 field3 field4 <<EOF
+ $1
+ EOF
++# Workaround for bash 5.0
++IFS=" "
+ 
+ # Separate into logical components for further validation
+ case $1 in

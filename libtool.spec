@@ -10,10 +10,6 @@
 %define _disable_lto 1
 %define _disable_rebuild_configure 1
 
-# Don't allow %%configure to overwrite the config.guess/config.sub
-# files -- they're supposed to come from this package
-%define config_update %{nil}
-
 %bcond_with bootstrap
 
 Summary:	The GNU libtool, which simplifies the use of shared libraries
@@ -47,6 +43,8 @@ Patch3:		libtool-2.4.6-lld.patch
 # (bero) any compiler actually worth using (definitely including clang and gcc)
 # knows better than libtool what its standard libraries are.
 Patch4:		libtool-2.4.6-no-bogus-nostdlib.patch
+# Make config.sub work with bash 5
+Patch5:		config-20180719-bash5.patch
 Patch12:	do-not-link-against-deplibs.patch
 Patch13:	drop-ld-no-undefined-for-shared-lib-modules.patch
 Patch14:	fix-checking-libltdl-is-installed-installable.patch
@@ -164,6 +162,7 @@ autoconf
 %define __cputoolize /bin/true
 
 %configure --disable-static
+
 %make_build
 
 # lame & ugly, trying to fix up relative paths that's made their way into libtool..
@@ -205,6 +204,16 @@ set -x
 # Let's retain compatibility with pathname hardcodes from earlier...
 mv %{buildroot}%{_datadir}/libtool/build-aux %{buildroot}%{_datadir}/libtool/config
 ln -s config %{buildroot}%{_datadir}/libtool/build-aux
+
+# Overwrite libtool's config.{guess,sub} with newer
+# versions...
+# (Needs to be wiped and unpacked again because %%configure
+# replaced the key files with its own versions)
+rm -rf config
+tar xf %{S:1}
+patch -p1 <%{P:5}
+cp -f config/config.{guess,sub} %{buildroot}%{_datadir}/libtool/build-aux/
+
 
 %files
 %doc AUTHORS NEWS README THANKS TODO
