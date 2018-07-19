@@ -10,17 +10,23 @@
 %define _disable_lto 1
 %define _disable_rebuild_configure 1
 
+# Don't allow %%configure to overwrite the config.guess/config.sub
+# files -- they're supposed to come from this package
+%define config_update %{nil}
+
 %bcond_with bootstrap
 
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.6
-Release:	9
+Release:	10
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
 Source0:	http://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.xz
-Source1:	libtool.rpmlintrc
+# From git://git.sv.gnu.org/config.git -- adds support for RISC-V and more
+Source1:	config-20180719.tar.xz
+Source10:	libtool.rpmlintrc
 # deprecated: introduced in July 2003
 # (cf http://lists.mandriva.com/cooker-amd64/2003-12/msg00046.php)
 # but is not needed anymore since Sept 2003 change in rpm "Make "x86_64" the
@@ -136,8 +142,13 @@ Provides:	%{libname_orig}-devel = %{EVRD}
 Development headers, and files for development from the libtool package.
 
 %prep
-%setup -q
+%setup -q -a 1
 %autopatch -p1
+cd config
+make
+cp -f config.{guess,sub} ../build-aux/
+cd ..
+
 #./bootstrap --force
 cd libltdl
 autoheader
