@@ -1,3 +1,24 @@
+In OpenMandriva and ROSA, -Wl,--no-undefined is in default %build_ldflags. This disallows unresolved symbols at link time and helps to catch errors at build time instead of runtime.
+In Fedora, --no-undefined is not used by default.
+Many programs build plugins, e.g. /usr/lib64/program/foo.so, and dlopen() them at runtime.
+These plugins are often underlinked [1], but it is OK because:
+(1.1) they are dlopen()'ed, in other words - loaded to an already existing runtime
+(1.2) that runtime already does have needed symbols loaded, so libraries-dependencies do not have to be loaded (loading a library which provides a symbol beforehand allows to resolve the symbol correctly)
+
+This patch allows plugins to be underlinked, while not allowing it for other binaries.
+An example is pygimp which is not linked with libpython, but is dlopen'ed correctly.
+
+So, what have following options to choose from:
+(2.1) remove "-Wl,--no-undefined": it will be very bad
+(2.2) remove this patch and prohibit plugins from being underlinked, manually inspect each case and either allow underlinking or fixing linker flags
+(2.3) remove this patch, remove "-Wl,--no-undefined", but add something like verify-elf from ALT Linux to spec-helper and check binaries for being underlinked, disallowing it for files inside /usr/(s)bin, /usr/libexec/ and versionized libraries in the root of /usr/lib(64)/, but allowing for files in subdirecties in /usr/lib like /usr/lib/xxx/*.so.
+
+For now, this patch is a compromize between (2.1) and (2.2), while (2.3) is not implemented.
+
+[1] http://wiki.rosalab.ru/ru/index.php/Underlinking
+
+// mikhailnov, 12.05.2020, after discussion with bero
+
 --- libtool-2.4.6/build-aux/ltmain.in.0013~	2015-07-12 16:13:04.092810000 +0200
 +++ libtool-2.4.6/build-aux/ltmain.in	2015-07-12 16:14:18.645184139 +0200
 @@ -5527,6 +5527,12 @@ func_mode_link ()
