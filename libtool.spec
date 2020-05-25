@@ -1,7 +1,17 @@
+# libltdl is used by pulseaudio, pulseaudio is used by wine
+%ifarch %{x86_64}
+%bcond_without compat32
+%else
+%bcond_with compat32
+%endif
+
 %define libname_orig libltdl
 %define major 7
 %define libname %mklibname ltdl %{major}
 %define devname %mklibname -d ltdl
+
+%define lib32name libltdl%{major}
+%define dev32name libltdl-devel
 
 # for the testsuite:
 %define _disable_ld_no_undefined 1
@@ -15,7 +25,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.6
-Release:	13
+Release:	14
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
@@ -139,6 +149,26 @@ Provides:	%{libname_orig}-devel = %{EVRD}
 %description -n %{devname}
 Development headers, and files for development from the libtool package.
 
+%if %{with compat32}
+%package -n %{lib32name}
+Group:		Development/C
+Summary:	Shared library files for libtool (32-bit)
+License:	LGPLv2.1+
+
+%description -n %{lib32name}
+Shared library files for libtool DLL library from the libtool package.
+
+%package -n %{dev32name}
+Group:		Development/C
+Summary:	Development files for libtool (32-bit)
+License:	LGPLv2.1+
+Requires:	%{devname} = %{EVRD}
+Requires:	%{lib32name} = %{EVRD}
+
+%description -n %{dev32name}
+Development headers, and files for development from the libtool package.
+%endif
+
 %prep
 %setup -q -a 1
 %autopatch -p1
@@ -153,26 +183,40 @@ autoheader
 aclocal
 automake -a
 autoconf
+cd ..
 
-%build
 # don't use configure macro - it forces libtoolize, which is bad -jgarzik
 # Use configure macro but define __libtoolize to be /bin/true -Geoff
 %define __libtoolize /bin/true
 # And don't overwrite config.{sub,guess} in this package as well -- Abel
 %define __cputoolize /bin/true
 
-%configure --disable-static
+export CONFIGURE_TOP="$(pwd)"
+%if %{with compat32}
+mkdir build32
+cd build32
+%configure32
+cd ..
+%endif
 
-%make_build
+mkdir build
+cd build
+%configure
+
+%build
+%if %{with compat32}
+%make_build -C build32
+%endif
+%make_build -C build
 
 # lame & ugly, trying to fix up relative paths that's made their way into libtool..
 DIRS=$(cat libtool|grep compiler_lib_search_dirs|grep -F ..|uniq|cut -d'"' -f2)
 PATHS=$(cat libtool|grep compiler_lib_search_path|grep -F ..|uniq|cut -d'"' -f2)
 for i in $DIRS; do cd $i; ABSOLUTE="$ABSOLUTE $PWD"; cd -; done
 ABSOLUTE=$(echo $ABSOLUTE | sed -e 's#%{_libdir} /%{_lib}#/%{_lib}#g' -e 's#%{_libdir} %{_libdir}#%{_libdir}#g')
-sed -e 's#compiler_lib_search_dirs=\"$DIRS\"#compiler_lib_search_dirs=\"$ABSOLUTE\"#g' -i libtool
+sed -e 's#compiler_lib_search_dirs=\"$DIRS\"#compiler_lib_search_dirs=\"$ABSOLUTE\"#g' -i build/libtool
 for i in $ABSOLUTE; do SEARCH=$(echo $SEARCH -L$i); done
-sed -e 's#compiler_lib_search_path=\"$PATHS\"#compiler_lib_search_path=\"$SEARCH\"#g' -i libtool
+sed -e 's#compiler_lib_search_path=\"$PATHS\"#compiler_lib_search_path=\"$SEARCH\"#g' -i build/libtool
 
 # Do not use -nostdlib to build libraries, and so no need to hardcode gcc path (mdvbz#44616)
 # (taken from debian, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=206356)
@@ -183,7 +227,7 @@ sed -i -e 's/^\(predep_objects\)=.*/\1=""/' \
        -e 's:^\(sys_lib_search_path_spec\)=.*:\1="/lib/ /usr/lib/ /usr/X11R6/lib/ /usr/local/lib/":' \
        -e 's/^\(archive_cmds=\".*\) -nostdlib /\1 /' \
        -e 's/^\(archive_expsym_cmds=\".*\) -nostdlib /\1 /' \
-       libtool
+       build/libtool
 
 %check
 set +x
@@ -192,14 +236,19 @@ set -x
 # all tests must pass here
 # disabling icecream since some tests check the output of gcc
 # Also disabling parallel make, as of 2.4.6 causes hangs on -j32 boxes
-ICECC=no make check VERBOSE=yes | tee make_check.log 2>&1 # || (cat make_check.log && false)
+%if %{with compat32}
+ICECC=no make -C build32 check VERBOSE=yes | tee make_check.log 2>&1 # || (cat make_check.log && false)
+%endif
+ICECC=no make -C build check VERBOSE=yes | tee make_check.log 2>&1 # || (cat make_check.log && false)
 set +x
 echo ====================TESTING END=====================
 set -x
 
-
 %install
-%make_install
+%if %{with compat32}
+%make_install -C build32
+%endif
+%make_install -C build
 
 # Let's retain compatibility with pathname hardcodes from earlier...
 mv %{buildroot}%{_datadir}/libtool/build-aux %{buildroot}%{_datadir}/libtool/config
@@ -234,3 +283,11 @@ cp -f config/config.{guess,sub} %{buildroot}%{_datadir}/libtool/build-aux/
 %doc libltdl/README
 %{_includedir}/*
 %{_libdir}/*.so
+
+%if %{with compat32}
+%files -n %{lib32name}
+%{_prefix}/lib/libltdl.so.%{major}*
+
+%files -n %{dev32name}
+%{_prefix}/lib/*.so
+%endif
