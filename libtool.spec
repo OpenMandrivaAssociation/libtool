@@ -25,7 +25,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.6
-Release:	15
+Release:	16
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
@@ -85,6 +85,7 @@ Patch128:	0028-libtool-pass-through-fuse-ld-flags.patch
 Patch129:	0029-tests-fix-objdir-hardcoding-check-with-CFLAGS-g3.patch
 Patch130:	0030-libtool-set-file_list_spec-to-on-OS-2.patch
 Patch132:	0032-libltdl-handle-ENOMEM-in-lt_dlloader_remove.patch
+Patch133:	0033-libtool-exit-verbosely-for-fatal-configure-problems.patch
 
 # Pass --rtlib=* to the linker unmodified
 # (must be applied after upstream patches because of conflicts)
@@ -95,6 +96,8 @@ Patch201:	libtool-2.4.6-less-insane-linker-filtering.patch
 
 BuildRequires:	help2man
 BuildRequires:	texinfo
+BuildRequires:	hostname
+BuildRequires:	git-core
 %if ! %{with bootstrap}
 BuildRequires:	gcc-gfortran
 %ifarch %{ix86} x86_64
@@ -177,7 +180,7 @@ make
 cp -f config.{guess,sub} ../build-aux/
 cd ..
 
-#./bootstrap --force
+./bootstrap --force
 cd libltdl
 autoheader
 aclocal
@@ -209,15 +212,6 @@ cd build
 %endif
 %make_build -C build
 
-# lame & ugly, trying to fix up relative paths that's made their way into libtool..
-DIRS=$(cat libtool|grep compiler_lib_search_dirs|grep -F ..|uniq|cut -d'"' -f2)
-PATHS=$(cat libtool|grep compiler_lib_search_path|grep -F ..|uniq|cut -d'"' -f2)
-for i in $DIRS; do cd $i; ABSOLUTE="$ABSOLUTE $PWD"; cd -; done
-ABSOLUTE=$(echo $ABSOLUTE | sed -e 's#%{_libdir} /%{_lib}#/%{_lib}#g' -e 's#%{_libdir} %{_libdir}#%{_libdir}#g')
-sed -e 's#compiler_lib_search_dirs=\"$DIRS\"#compiler_lib_search_dirs=\"$ABSOLUTE\"#g' -i build/libtool
-for i in $ABSOLUTE; do SEARCH=$(echo $SEARCH -L$i); done
-sed -e 's#compiler_lib_search_path=\"$PATHS\"#compiler_lib_search_path=\"$SEARCH\"#g' -i build/libtool
-
 # Do not use -nostdlib to build libraries, and so no need to hardcode gcc path (mdvbz#44616)
 # (taken from debian, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=206356)
 # ([PIX] this is not done as a patch since the patch would be too big to maintain)
@@ -227,7 +221,7 @@ sed -i -e 's/^\(predep_objects\)=.*/\1=""/' \
        -e 's:^\(sys_lib_search_path_spec\)=.*:\1="/lib/ /usr/lib/ /usr/X11R6/lib/ /usr/local/lib/":' \
        -e 's/^\(archive_cmds=\".*\) -nostdlib /\1 /' \
        -e 's/^\(archive_expsym_cmds=\".*\) -nostdlib /\1 /' \
-       build/libtool
+       build*/libtool
 
 %check
 set +x
@@ -262,7 +256,6 @@ rm -rf config
 tar xf %{S:1}
 patch -p1 <%{P:5}
 cp -f config/config.{guess,sub} %{buildroot}%{_datadir}/libtool/build-aux/
-
 
 %files
 %doc AUTHORS NEWS README THANKS TODO
