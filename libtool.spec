@@ -55,7 +55,6 @@ Patch3:		libtool-2.4.6-lld.patch
 Patch4:		libtool-2.4.6-no-bogus-nostdlib.patch
 # Make config.sub work with bash 5
 Patch5:		config-20180719-bash5.patch
-Patch12:	do-not-link-against-deplibs.patch
 Patch13:	drop-ld-no-undefined-for-shared-lib-modules.patch
 Patch14:	fix-checking-libltdl-is-installed-installable.patch
 # (cjw) do not use CFLAGS when running gcj
@@ -180,14 +179,14 @@ make
 cp -f config.{guess,sub} ../build-aux/
 cd ..
 
-./bootstrap --force
+#./bootstrap --force
 cd libltdl
 autoheader
 aclocal
 automake -a
 autoconf
-cd ..
 
+%build
 # don't use configure macro - it forces libtoolize, which is bad -jgarzik
 # Use configure macro but define __libtoolize to be /bin/true -Geoff
 %define __libtoolize /bin/true
@@ -205,8 +204,9 @@ cd ..
 mkdir build
 cd build
 %configure
+cd ..
 
-%build
+
 %if %{with compat32}
 %make_build -C build32
 %endif
