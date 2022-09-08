@@ -24,14 +24,12 @@
 
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
-Version:	2.4.6
-Release:	17
+Version:	2.4.7
+Release:	1
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
 Source0:	http://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.xz
-# From git://git.sv.gnu.org/config.git -- adds support for RISC-V and more
-Source1:	config-20180719.tar.xz
 Source10:	libtool.rpmlintrc
 # deprecated: introduced in July 2003
 # (cf http://lists.mandriva.com/cooker-amd64/2003-12/msg00046.php)
@@ -53,8 +51,6 @@ Patch3:		libtool-2.4.6-lld.patch
 # (bero) any compiler actually worth using (definitely including clang and gcc)
 # knows better than libtool what its standard libraries are.
 Patch4:		libtool-2.4.6-no-bogus-nostdlib.patch
-# Make config.sub work with bash 5
-Patch5:		config-20180719-bash5.patch
 Patch13:	drop-ld-no-undefined-for-shared-lib-modules.patch
 Patch14:	fix-checking-libltdl-is-installed-installable.patch
 # (cjw) do not use CFLAGS when running gcj
@@ -67,24 +63,6 @@ Patch17:	libtool-2.2.6b-libltdl-install-test-fix.patch
 Patch20:	libtool-2.4.2-use-so-to-detect-libltdl.patch
 
 # (tpg) upstream git
-Patch100:	0000-libtool-fix-GCC-linking-with-specs.patch
-Patch101:	0001-bootstrap-fix-race-in-temporary-Makefile.patch
-Patch105:	0005-libool.m4-add-ARFLAGS-variable.patch
-Patch106:	0006-ARFLAGS-use-cr-instead-of-cru-by-default.patch
-Patch107:	0007-maint-relax-sc_prohibit_test_dollar-check.patch
-Patch113:	0013-gl-tests-new-tests-for-func_quote-family.patch
-Patch114:	0014-syntax-check-fix-sed-syntax-errors.patch
-Patch117:	0017-m4-libtool.m4-export-AIX-TLS-symbols.patch
-Patch118:	0018-gl-tests-make-the-failure-more-readable.patch
-Patch119:	0019-libtool-fix-GCC-clang-linking-with-fsanitize.patch
-Patch122:	0022-libltdl-handle-ENOMEM-sooner.patch
-Patch126:	0026-libtoolize-exec-automake-and-autoconf-only-with-help.patch
-Patch127:	0027-m4-libtool.m4-FreeBSD-elftoolchain-strip-support.patch
-Patch128:	0028-libtool-pass-through-fuse-ld-flags.patch
-Patch129:	0029-tests-fix-objdir-hardcoding-check-with-CFLAGS-g3.patch
-Patch130:	0030-libtool-set-file_list_spec-to-on-OS-2.patch
-Patch132:	0032-libltdl-handle-ENOMEM-in-lt_dlloader_remove.patch
-Patch133:	0033-libtool-exit-verbosely-for-fatal-configure-problems.patch
 
 # Pass --rtlib=* to the linker unmodified
 # (must be applied after upstream patches because of conflicts)
@@ -172,13 +150,7 @@ Development headers, and files for development from the libtool package.
 %endif
 
 %prep
-%setup -q -a 1
-%autopatch -p1
-cd config
-make
-cp -f config.{guess,sub} ../build-aux/
-cd ..
-
+%autosetup -p1
 #./bootstrap --force
 cd libltdl
 autoheader
@@ -247,15 +219,6 @@ set -x
 # Let's retain compatibility with pathname hardcodes from earlier...
 mv %{buildroot}%{_datadir}/libtool/build-aux %{buildroot}%{_datadir}/libtool/config
 ln -s config %{buildroot}%{_datadir}/libtool/build-aux
-
-# Overwrite libtool's config.{guess,sub} with newer
-# versions...
-# (Needs to be wiped and unpacked again because %%configure
-# replaced the key files with its own versions)
-rm -rf config
-tar xf %{S:1}
-patch -p1 <%{P:5}
-cp -f config/config.{guess,sub} %{buildroot}%{_datadir}/libtool/build-aux/
 
 %files
 %doc AUTHORS NEWS README THANKS TODO

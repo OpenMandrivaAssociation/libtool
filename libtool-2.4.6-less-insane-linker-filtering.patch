@@ -1,23 +1,10 @@
-diff -up libtool-2.4.6/build-aux/ltmain.in.omv~ libtool-2.4.6/build-aux/ltmain.in
---- libtool-2.4.6/build-aux/ltmain.in.omv~	2018-06-23 15:48:47.986957391 +0200
-+++ libtool-2.4.6/build-aux/ltmain.in	2018-06-23 15:56:04.476973668 +0200
-@@ -5355,21 +5355,25 @@ func_mode_link ()
-       # -q*                  compiler args for the IBM compiler
-       # -m*, -t[45]*, -txscale* architecture-specific flags for GCC
-       # -F/path              path to uninstalled frameworks, gcc on darwin
--      # -p, -pg, --coverage, -fprofile-*  profiling flags for GCC
--      # -fstack-protector*   stack protector flags for GCC
-+      # -p, -pg, --coverage  profiling flags for GCC
-       # @file                GCC response files
-       # -tp=*                Portland pgcc target processor selection
-       # --sysroot=*          for sysroot support
--      # -O*, -g*, -flto*, -fwhopr*, -fuse-linker-plugin GCC link-time optimization
-+      # -O*, -g*             GCC/clang link-time optimization
-       # -specs=*             GCC specs files
-       # -stdlib=*            select c++ std lib with clang
--      # -fsanitize=*         Clang/GCC memory and address sanitizer
--      # -fuse-ld=*           Linker select flags for GCC
-       # --rtlib=*            libgcc vs. compiler-rt selection for clang
+diff -up libtool-2.4.7/build-aux/ltmain.in.12~ libtool-2.4.7/build-aux/ltmain.in
+--- libtool-2.4.7/build-aux/ltmain.in.12~	2022-09-08 16:48:23.002527238 +0200
++++ libtool-2.4.7/build-aux/ltmain.in	2022-09-08 16:52:06.285708857 +0200
+@@ -5410,10 +5410,18 @@ func_mode_link ()
+       # -fuse-ld=*           Linker select flags for GCC
+       # -Wa,*                Pass flags directly to the assembler
+       # --rtlib=*            clang runtime library (libgcc vs compiler-rt)
 +      # -f*                  Mostly optimization related flags that become
 +      #                      relevant at link time when LTO is enabled -- also
 +      #                      bits that are relevant for picking runtime libraries
@@ -27,11 +14,10 @@ diff -up libtool-2.4.6/build-aux/ltmain.in.omv~ libtool-2.4.6/build-aux/ltmain.i
 +      # --param=*            GCC/Clang parameters (ssp-buffer-size=4, ...)
 +      # -Wl,*                GCC/Clang obviously meant for the linker
        -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
--      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|--sysroot=*| \
--      -O*|-g*|-flto*|-fwhopr*|-fuse-linker-plugin|-fstack-protector*|-stdlib=*| \
--      -specs=*|-fsanitize=*|-fuse-ld=*|--rtlib=*)
-+      -t[45]*|-txscale*|-p|-pg|--coverage|-F*|@*|-tp=*|--sysroot=*| \
-+      -O*|-g*|-stdlib=*|-specs=*|--rtlib=*|-f*|-polly*|-pipe|--param=*|-Wl,*)
-         func_quote_for_eval "$arg"
- 	arg=$func_quote_for_eval_result
+       -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|--sysroot=*| \
+       -O*|-g*|-flto*|-fwhopr*|-fuse-linker-plugin|-fstack-protector*|-stdlib=*| \
+-      -specs=*|-fsanitize=*|-fuse-ld=*|-Wa,*|--rtlib=*)
++      -specs=*|-fsanitize=*|-fuse-ld=*|-Wa,*|--rtlib=*|-f*|-polly*|-pipe|--param=*|-Wl,*)
+         func_quote_arg pretty "$arg"
+ 	arg=$func_quote_arg_result
          func_append compile_command " $arg"
