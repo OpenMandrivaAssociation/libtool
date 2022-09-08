@@ -134,6 +134,7 @@ Development headers, and files for development from the libtool package.
 Group:		Development/C
 Summary:	Shared library files for libtool (32-bit)
 License:	LGPLv2.1+
+BuildRequires:	libc6
 
 %description -n %{lib32name}
 Shared library files for libtool DLL library from the libtool package.
