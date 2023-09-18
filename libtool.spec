@@ -196,6 +196,7 @@ sed -i -e 's/^\(predep_objects\)=.*/\1=""/' \
        -e 's/^\(archive_expsym_cmds=\".*\) -nostdlib /\1 /' \
        build*/libtool
 
+%if ! %{cross_compiling}
 %check
 set +x
 echo ====================TESTING=========================
@@ -210,6 +211,7 @@ ICECC=no make -C build check VERBOSE=yes | tee make_check.log 2>&1 # || (cat mak
 set +x
 echo ====================TESTING END=====================
 set -x
+%endif
 
 %install
 %if %{with compat32}
