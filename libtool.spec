@@ -25,7 +25,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.4.7
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
@@ -70,6 +70,8 @@ Patch200:	libtool-2.4.6-pass-rtlib.patch
 # If we put something on ldflags, we mean it to get through to ld!!!
 # Just stop the insanity.
 Patch201:	libtool-2.4.6-less-insane-linker-filtering.patch
+# (tpg) https://lists.gnu.org/archive/html/libtool-patches/2022-02/msg00000.html
+Patch202:	https://src.fedoraproject.org/rpms/libtool/raw/rawhide/f/libtool-2.4.6-keep-compiler-deps.patch
 
 BuildRequires:	help2man
 BuildRequires:	texinfo
@@ -179,7 +181,6 @@ cd build
 %configure
 cd ..
 
-
 %if %{with compat32}
 %make_build -C build32
 %endif
@@ -226,12 +227,12 @@ ln -s config %{buildroot}%{_datadir}/libtool/build-aux
 %files
 %doc AUTHORS NEWS README THANKS TODO
 %{_bindir}/libtool
-%{_mandir}/man1/libtool.1*
+%doc %{_mandir}/man1/libtool.1*
 
 %files base
 %{_bindir}/libtoolize
-%{_mandir}/man1/libtoolize.*
-%{_infodir}/libtool.info*
+%doc %{_mandir}/man1/libtoolize.*
+%doc %{_infodir}/libtool.info*
 %{_datadir}/libtool
 %{_datadir}/aclocal/*.m4
 
