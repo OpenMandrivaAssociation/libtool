@@ -1,10 +1,10 @@
-diff -up libtool-2.4.7/build-aux/ltmain.in.12~ libtool-2.4.7/build-aux/ltmain.in
---- libtool-2.4.7/build-aux/ltmain.in.12~	2022-09-08 16:48:23.002527238 +0200
-+++ libtool-2.4.7/build-aux/ltmain.in	2022-09-08 16:52:06.285708857 +0200
-@@ -5410,10 +5410,18 @@ func_mode_link ()
-       # -fuse-ld=*           Linker select flags for GCC
+diff -up libtool-2.5.3/build-aux/ltmain.in.11~ libtool-2.5.3/build-aux/ltmain.in
+--- libtool-2.5.3/build-aux/ltmain.in.11~	2024-09-27 13:41:20.425874580 +0200
++++ libtool-2.5.3/build-aux/ltmain.in	2024-09-27 13:45:54.467742703 +0200
+@@ -5432,6 +5432,14 @@ func_mode_link ()
+       # -f{file|debug|macro|profile}-prefix-map=* needed for lto linking
        # -Wa,*                Pass flags directly to the assembler
-       # --rtlib=*            clang runtime library (libgcc vs compiler-rt)
+       # -Werror, -Werror=*   Report (specified) warnings as errors
 +      # -f*                  Mostly optimization related flags that become
 +      #                      relevant at link time when LTO is enabled -- also
 +      #                      bits that are relevant for picking runtime libraries
@@ -15,9 +15,13 @@ diff -up libtool-2.4.7/build-aux/ltmain.in.12~ libtool-2.4.7/build-aux/ltmain.in
 +      # -Wl,*                GCC/Clang obviously meant for the linker
        -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
        -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|--sysroot=*| \
-       -O*|-g*|-flto*|-fwhopr*|-fuse-linker-plugin|-fstack-protector*|-stdlib=*| \
--      -specs=*|-fsanitize=*|-fuse-ld=*|-Wa,*|--rtlib=*)
-+      -specs=*|-fsanitize=*|-fuse-ld=*|-Wa,*|--rtlib=*|-f*|-polly*|-pipe|--param=*|-Wl,*)
+       -O*|-g*|-flto*|-fwhopr*|-fuse-linker-plugin|-fstack-protector*|-no-canonical-prefixes| \
+@@ -5439,7 +5447,7 @@ func_mode_link ()
+       -specs=*|-fsanitize=*|-fno-sanitize*|-shared-libsan|-static-libsan| \
+       -ffile-prefix-map=*|-fdebug-prefix-map=*|-fmacro-prefix-map=*|-fprofile-prefix-map=*| \
+       -fdiagnostics-color*|-frecord-gcc-switches| \
+-      -fuse-ld=*|-static-*|-fcilkplus|-Wa,*|-Werror|-Werror=*)
++      -fuse-ld=*|-static-*|-fcilkplus|-Wa,*|-Werror|-Werror=*|-f*|-polly*|-pipe|--param=*|-Wl,*)
          func_quote_arg pretty "$arg"
  	arg=$func_quote_arg_result
          func_append compile_command " $arg"

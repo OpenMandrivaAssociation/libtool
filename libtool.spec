@@ -24,8 +24,8 @@
 
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
-Version:	2.4.7
-Release:	3
+Version:	2.5.3
+Release:	1
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://www.gnu.org/software/libtool/libtool.html
@@ -64,9 +64,6 @@ Patch20:	libtool-2.4.2-use-so-to-detect-libltdl.patch
 
 # (tpg) upstream git
 
-# Pass --rtlib=* to the linker unmodified
-# (must be applied after upstream patches because of conflicts)
-Patch200:	libtool-2.4.6-pass-rtlib.patch
 # If we put something on ldflags, we mean it to get through to ld!!!
 # Just stop the insanity.
 Patch201:	libtool-2.4.6-less-insane-linker-filtering.patch
@@ -92,8 +89,9 @@ generically build shared libraries.  Libtool provides a consistent,
 portable interface which simplifies the process of using shared
 libraries.
 
-If you are developing programs which will use shared libraries, you
-should install libtool.
+This tool is deprecated. Please use a build system that doesn't need
+libtool, such as cmake or meson, for new applications.
+For autotools based applications, we recommend using slibtool.
 
 %package base
 Group:		Development/C
@@ -107,8 +105,9 @@ generically build shared libraries.  Libtool provides a consistent,
 portable interface which simplifies the process of using shared
 libraries.
 
-If you are developing programs which will use shared libraries, you
-should install libtool.
+This tool is deprecated. Please use a build system that doesn't need
+libtool, such as cmake or meson, for new applications.
+For autotools based applications, we recommend using slibtool.
 
 %package -n %{libname}
 Group:		Development/C
