@@ -28,7 +28,7 @@ Version:	2.5.3
 Release:	1
 License:	GPLv2+
 Group:		Development/Other
-Url:		http://www.gnu.org/software/libtool/libtool.html
+Url:		https://www.gnu.org/software/libtool/libtool.html
 Source0:	http://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.xz
 Source10:	libtool.rpmlintrc
 # deprecated: introduced in July 2003
