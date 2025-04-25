@@ -1,6 +1,7 @@
---- libtool-2.4.6/m4/libtool.m4.omv~	2016-03-07 08:26:14.736060639 +0100
-+++ libtool-2.4.6/m4/libtool.m4	2016-03-07 08:30:51.368727174 +0100
-@@ -6394,8 +6394,8 @@ if test yes != "$_lt_caught_CXX_error";
+diff -up libtool-2.5.4/m4/libtool.m4.5~ libtool-2.5.4/m4/libtool.m4
+--- libtool-2.5.4/m4/libtool.m4.5~	2025-04-25 01:51:27.161287771 +0200
++++ libtool-2.5.4/m4/libtool.m4	2025-04-25 01:53:06.389119604 +0200
+@@ -6559,8 +6559,8 @@ if test yes != "$_lt_caught_CXX_error";
        # Check if GNU C++ uses GNU ld as the underlying linker, since the
        # archiving commands below assume that GNU ld is being used.
        if test yes = "$with_gnu_ld"; then
@@ -11,7 +12,7 @@
  
          _LT_TAGVAR(hardcode_libdir_flag_spec, $1)='$wl-rpath $wl$libdir'
          _LT_TAGVAR(export_dynamic_flag_spec, $1)='$wl--export-dynamic'
-@@ -6421,7 +6421,7 @@ if test yes != "$_lt_caught_CXX_error";
+@@ -6585,7 +6585,7 @@ if test yes != "$_lt_caught_CXX_error";
          # linker, instead of GNU ld.  If possible, this setting should
          # overridden to take advantage of the native linker features on
          # the platform it is being used on.
@@ -20,16 +21,16 @@
        fi
  
        # Commands to make compiler produce verbose output that lists
-@@ -6692,7 +6692,7 @@ if test yes != "$_lt_caught_CXX_error";
- 	  _LT_TAGVAR(enable_shared_with_static_runtimes, $1)=yes
+@@ -6856,7 +6856,7 @@ if test yes != "$_lt_caught_CXX_error";
+ 	  _LT_TAGVAR(file_list_spec, $1)='@'
  
  	  if $LD --help 2>&1 | $GREP 'auto-import' > /dev/null; then
 -	    _LT_TAGVAR(archive_cmds, $1)='$CC -shared -nostdlib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags -o $output_objdir/$soname $wl--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
-+	    _LT_TAGVAR(archive_cmds, $1)='$CC -shared $libobjs $deplibs $compiler_flags -o $output_objdir/$soname $wl--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
++	    _LT_TAGVAR(archive_cmds, $1)='$CC -shared $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags -o $output_objdir/$soname $wl--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
  	    # If the export-symbols file already is a .def file, use it as
  	    # is; otherwise, prepend EXPORTS...
  	    _LT_TAGVAR(archive_expsym_cmds, $1)='if _LT_DLL_DEF_P([$export_symbols]); then
-@@ -6701,7 +6701,7 @@ if test yes != "$_lt_caught_CXX_error";
+@@ -6865,7 +6865,7 @@ if test yes != "$_lt_caught_CXX_error";
                echo EXPORTS > $output_objdir/$soname.def;
                cat $export_symbols >> $output_objdir/$soname.def;
              fi~
@@ -38,7 +39,7 @@
  	  else
  	    _LT_TAGVAR(ld_shlibs, $1)=no
  	  fi
-@@ -6807,7 +6807,7 @@ if test yes != "$_lt_caught_CXX_error";
+@@ -6972,7 +6972,7 @@ if test yes != "$_lt_caught_CXX_error";
              ;;
            *)
              if test yes = "$GXX"; then
@@ -47,7 +48,7 @@
              else
                # FIXME: insert proper C++ library support
                _LT_TAGVAR(ld_shlibs, $1)=no
-@@ -6875,13 +6875,13 @@ if test yes != "$_lt_caught_CXX_error";
+@@ -7040,13 +7040,13 @@ if test yes != "$_lt_caught_CXX_error";
  	      if test no = "$with_gnu_ld"; then
  	        case $host_cpu in
  	          hppa*64*)
@@ -64,7 +65,7 @@
  	            ;;
  	        esac
  	      fi
-@@ -6922,9 +6922,9 @@ if test yes != "$_lt_caught_CXX_error";
+@@ -7087,9 +7087,9 @@ if test yes != "$_lt_caught_CXX_error";
            *)
  	    if test yes = "$GXX"; then
  	      if test no = "$with_gnu_ld"; then

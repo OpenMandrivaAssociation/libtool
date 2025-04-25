@@ -24,7 +24,7 @@
 
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
-Version:	2.5.3
+Version:	2.5.4
 Release:	1
 License:	GPLv2+
 Group:		Development/Other
@@ -156,7 +156,7 @@ Development headers, and files for development from the libtool package.
 #./bootstrap --force
 cd libltdl
 autoheader
-aclocal
+aclocal -I ../m4
 automake -a
 autoconf
 
