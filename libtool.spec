@@ -70,6 +70,11 @@ Patch201:	libtool-2.4.6-less-insane-linker-filtering.patch
 # (tpg) https://lists.gnu.org/archive/html/libtool-patches/2022-02/msg00000.html
 Patch202:	https://src.fedoraproject.org/rpms/libtool/raw/rawhide/f/libtool-2.4.6-keep-compiler-deps.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	help2man
 BuildRequires:	texinfo
 BuildRequires:	hostname
