@@ -25,7 +25,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.5.4
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		Development/Other
 Url:		https://www.gnu.org/software/libtool/libtool.html
@@ -102,6 +102,7 @@ For autotools based applications, we recommend using slibtool.
 Group:		Development/C
 Summary:	Basic package for %{name}
 Requires:	file
+Requires:	m4
 
 %description base
 The libtool package contains the GNU libtool, a set of shell scripts
