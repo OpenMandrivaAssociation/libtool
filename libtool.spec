@@ -25,7 +25,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.5.4
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		Development/Other
 Url:		https://www.gnu.org/software/libtool/libtool.html
@@ -70,9 +70,9 @@ Patch201:	libtool-2.4.6-less-insane-linker-filtering.patch
 # (tpg) https://lists.gnu.org/archive/html/libtool-patches/2022-02/msg00000.html
 Patch202:	https://src.fedoraproject.org/rpms/libtool/raw/rawhide/f/libtool-2.4.6-keep-compiler-deps.patch
 
+BuildRequires:	gnu-config
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libtool-base
 BuildRequires:	slibtool
 BuildRequires:	make
 BuildRequires:	help2man
@@ -103,6 +103,7 @@ Group:		Development/C
 Summary:	Basic package for %{name}
 Requires:	file
 Requires:	m4
+Requires:	gnu-config
 
 %description base
 The libtool package contains the GNU libtool, a set of shell scripts
@@ -228,6 +229,10 @@ set -x
 # Let's retain compatibility with pathname hardcodes from earlier...
 mv %{buildroot}%{_datadir}/libtool/build-aux %{buildroot}%{_datadir}/libtool/config
 ln -s config %{buildroot}%{_datadir}/libtool/build-aux
+# Replace config.sub/config.guess with the system copies
+rm %{buildroot}%{_datadir}/libtool/config/config.{sub,guess}
+ln -s %{_bindir}/config.guess %{buildroot}%{_datadir}/libtool/config/
+ln -s %{_bindir}/config.sub %{buildroot}%{_datadir}/libtool/config/
 
 %files
 %doc AUTHORS NEWS README THANKS TODO
