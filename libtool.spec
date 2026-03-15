@@ -25,7 +25,7 @@
 Summary:	The GNU libtool, which simplifies the use of shared libraries
 Name:		libtool
 Version:	2.5.4
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		Development/Other
 Url:		https://www.gnu.org/software/libtool/libtool.html
@@ -104,6 +104,7 @@ Summary:	Basic package for %{name}
 Requires:	file
 Requires:	m4
 Requires:	gnu-config
+Requires:	%{name}-autoconf-macros = %{EVRD}
 
 %description base
 The libtool package contains the GNU libtool, a set of shell scripts
@@ -115,6 +116,17 @@ libraries.
 This tool is deprecated. Please use a build system that doesn't need
 libtool, such as cmake or meson, for new applications.
 For autotools based applications, we recommend using slibtool.
+
+%package autoconf-macros
+Summary:	Autoconf macros for detecting (s)libtool
+Group:		Development/C
+Requires:	(slibtool or %{name}-base)
+
+%description autoconf-macros
+Autoconf macros for detecting (s)libtool.
+
+These macros have been split out of libtool so they can be used
+with slibtool without pulling in all of libtool.
 
 %package -n %{libname}
 Group:		Development/C
@@ -244,6 +256,8 @@ ln -s %{_bindir}/config.sub %{buildroot}%{_datadir}/libtool/config/
 %doc %{_mandir}/man1/libtoolize.*
 %doc %{_infodir}/libtool.info*
 %{_datadir}/libtool
+
+%files autoconf-macros
 %{_datadir}/aclocal/*.m4
 
 %files -n %{libname}
