@@ -1,14 +1,13 @@
-diff -up libtool-2.5.3/build-aux/ltmain.in.12~ libtool-2.5.3/build-aux/ltmain.in
---- libtool-2.5.3/build-aux/ltmain.in.12~	2024-09-27 13:46:27.228627816 +0200
-+++ libtool-2.5.3/build-aux/ltmain.in	2024-09-27 13:49:08.473654248 +0200
-@@ -519,17 +519,10 @@ libtool_validate_options ()
+--- libtool-2.6.2/build-aux/ltmain.in
++++ libtool-2.6.2/build-aux/ltmain.in
+@@ -587,17 +587,10 @@ libtool_validate_options ()
      # preserve --debug
      test : = "$debug_cmd" || func_append preserve_args " --debug"
  
 -    case $host_os in
--      # Solaris2 added to fix http://debbugs.gnu.org/cgi/bugreport.cgi?bug=16452
--      # see also: http://gcc.gnu.org/bugzilla/show_bug.cgi?id=59788
--      cygwin* | mingw* | windows* | pw32* | cegcc* | solaris2* | os2*)
+-      # Solaris2 added to fix https://debbugs.gnu.org/cgi/bugreport.cgi?bug=16452
+-      # see also: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=59788
+-      cygwin* | mingw* | windows* | pw32* | cegcc* | solaris2* | os2* | *linux*)
 -        # don't eliminate duplications in $postdeps and $predeps
 -        opt_duplicate_compiler_generated_deps=:
 -        ;;
@@ -23,17 +22,16 @@ diff -up libtool-2.5.3/build-aux/ltmain.in.12~ libtool-2.5.3/build-aux/ltmain.in
  
      $opt_help || {
        # Sanity checks first:
-diff -up libtool-2.5.3/build-aux/ltmain.sh.12~ libtool-2.5.3/build-aux/ltmain.sh
---- libtool-2.5.3/build-aux/ltmain.sh.12~	2024-09-27 13:46:27.230627810 +0200
-+++ libtool-2.5.3/build-aux/ltmain.sh	2024-09-27 13:49:27.814714912 +0200
-@@ -2668,17 +2668,10 @@ libtool_validate_options ()
+--- libtool-2.6.2/build-aux/ltmain.sh
++++ libtool-2.6.2/build-aux/ltmain.sh
+@@ -2736,17 +2736,10 @@ libtool_validate_options ()
      # preserve --debug
      test : = "$debug_cmd" || func_append preserve_args " --debug"
  
 -    case $host_os in
--      # Solaris2 added to fix http://debbugs.gnu.org/cgi/bugreport.cgi?bug=16452
--      # see also: http://gcc.gnu.org/bugzilla/show_bug.cgi?id=59788
--      cygwin* | mingw* | windows* | pw32* | cegcc* | solaris2* | os2*)
+-      # Solaris2 added to fix https://debbugs.gnu.org/cgi/bugreport.cgi?bug=16452
+-      # see also: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=59788
+-      cygwin* | mingw* | windows* | pw32* | cegcc* | solaris2* | os2* | *linux*)
 -        # don't eliminate duplications in $postdeps and $predeps
 -        opt_duplicate_compiler_generated_deps=:
 -        ;;

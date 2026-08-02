@@ -1,7 +1,8 @@
-diff -up libtool-2.5.3/m4/libtool.m4.2~ libtool-2.5.3/m4/libtool.m4
---- libtool-2.5.3/m4/libtool.m4.2~	2024-09-25 15:52:26.000000000 +0200
-+++ libtool-2.5.3/m4/libtool.m4	2024-09-27 13:39:04.697350259 +0200
-@@ -2930,6 +2930,9 @@ linux* | k*bsd*-gnu | kopensolaris*-gnu
+diff --git a/m4/libtool.m4 b/m4/libtool.m4
+index 96e6c7d..860188c 100644
+--- a/m4/libtool.m4
++++ b/m4/libtool.m4
+@@ -3077,6 +3077,9 @@ linux* | ironclad*-gnu | k*bsd*-gnu | kopensolaris*-gnu | gnu*)
    # before this can be enabled.
    hardcode_into_libs=yes
  
@@ -11,7 +12,7 @@ diff -up libtool-2.5.3/m4/libtool.m4.2~ libtool-2.5.3/m4/libtool.m4
    # Ideally, we could use ldconfig to report *all* directories which are
    # searched for libraries, however this is still not possible.  Aside from not
    # being certain /sbin/ldconfig is available, command
-@@ -2938,7 +2941,7 @@ linux* | k*bsd*-gnu | kopensolaris*-gnu
+@@ -3085,7 +3088,7 @@ linux* | ironclad*-gnu | k*bsd*-gnu | kopensolaris*-gnu | gnu*)
    # appending ld.so.conf contents (and includes) to the search path.
    if test -f /etc/ld.so.conf; then
      lt_ld_extra=`awk '/^include / { system(sprintf("cd /etc; cat %s 2>/dev/null", \[$]2)); skip = 1; } { if (!skip) print \[$]0; skip = 0; }' < /etc/ld.so.conf | $SED -e 's/#.*//;/^[	 ]*hwcap[	 ]/d;s/[:,	]/ /g;s/=[^=]*$//;s/=[^= ]* / /g;s/"//g;/^$/d' | tr '\n' ' '`

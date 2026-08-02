@@ -1,6 +1,8 @@
---- libtool-2.4.6/m4/ltdl.m4.0020~	2015-07-12 16:21:29.308057047 +0200
-+++ libtool-2.4.6/m4/ltdl.m4	2015-07-12 16:22:28.481672449 +0200
-@@ -95,7 +95,7 @@ m4_defun([_LTDL_CONVENIENCE],
+diff --git a/m4/ltdl.m4 b/m4/ltdl.m4
+index 3307810..ff09bbb 100644
+--- a/m4/ltdl.m4
++++ b/m4/ltdl.m4
+@@ -96,7 +96,7 @@ m4_defun([_LTDL_CONVENIENCE],
    "") enable_ltdl_convenience=yes
        ac_configure_args="$ac_configure_args --enable-ltdl-convenience" ;;
  esac
@@ -9,7 +11,7 @@
  LTDLDEPS=$LIBLTDL
  LTDLINCL='-I$(top_srcdir)'"${lt_ltdl_dir+/$lt_ltdl_dir}"
  
-@@ -166,7 +166,7 @@ case $enable_ltdl_install in
+@@ -167,7 +167,7 @@ case $enable_ltdl_install in
        ;;
    *)  enable_ltdl_install=yes
        ac_configure_args="$ac_configure_args --enable-ltdl-install"
@@ -18,7 +20,7 @@
        LTDLDEPS=$LIBLTDL
        LTDLINCL='-I$(top_srcdir)'"${lt_ltdl_dir+/$lt_ltdl_dir}"
        ;;
-@@ -273,10 +273,10 @@ fi
+@@ -274,10 +274,10 @@ fi
  
  AC_ARG_WITH([ltdl_lib],
      [AS_HELP_STRING([--with-ltdl-lib=DIR],

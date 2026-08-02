@@ -1,6 +1,8 @@
---- libtool-2.4.6/tests/configure-iface.at.0017~	2015-07-12 16:19:14.758964288 +0200
-+++ libtool-2.4.6/tests/configure-iface.at	2015-07-12 16:19:56.049680538 +0200
-@@ -142,7 +142,7 @@ main_DEPENDENCIES	= $(LTDLDEPS) libmodul
+diff --git a/tests/configure-iface.at b/tests/configure-iface.at
+index 47e56f0..724c539 100644
+--- a/tests/configure-iface.at
++++ b/tests/configure-iface.at
+@@ -140,7 +140,7 @@ main_DEPENDENCIES	= $(LTDLDEPS) libmodule.la
  prefix=`pwd`/_inst
  
  LT_AT_BOOTSTRAP([--ltdl], [-I libltdl/m4], [], [--add-missing], [],

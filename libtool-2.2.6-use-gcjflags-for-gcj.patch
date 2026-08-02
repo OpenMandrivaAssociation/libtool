@@ -1,6 +1,8 @@
---- libtool-2.4.6/m4/libtool.m4.0016~	2015-07-12 16:18:14.071391059 +0200
-+++ libtool-2.4.6/m4/libtool.m4	2015-07-12 16:18:50.376134303 +0200
-@@ -7955,10 +7955,6 @@ lt_simple_link_test_code='public class c
+diff --git a/m4/libtool.m4 b/m4/libtool.m4
+index 8d6d3e9..62dec9c 100644
+--- a/m4/libtool.m4
++++ b/m4/libtool.m4
+@@ -8288,10 +8288,6 @@ lt_simple_link_test_code='public class conftest { public static void main(String
  # ltmain only uses $CC for tagged configurations so make sure $CC is set.
  _LT_TAG_COMPILER
  
@@ -11,7 +13,7 @@
  # Allow CC to be a program name with arguments.
  lt_save_CC=$CC
  lt_save_CFLAGS=$CFLAGS
-@@ -7971,6 +7967,13 @@ _LT_TAGVAR(compiler, $1)=$CC
+@@ -8304,6 +8300,13 @@ _LT_TAGVAR(compiler, $1)=$CC
  _LT_TAGVAR(LD, $1)=$LD
  _LT_CC_BASENAME([$compiler])
  

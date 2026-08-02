@@ -1,6 +1,8 @@
---- libtool-2.4.6/m4/libtool.m4.omv~	2017-03-11 17:57:43.826096473 +0100
-+++ libtool-2.4.6/m4/libtool.m4	2017-03-11 17:59:37.067007802 +0100
-@@ -3324,7 +3324,7 @@ AC_CACHE_VAL(lt_cv_path_LD,
+diff --git a/m4/libtool.m4 b/m4/libtool.m4
+index 860188c..8d6d3e9 100644
+--- a/m4/libtool.m4
++++ b/m4/libtool.m4
+@@ -3559,7 +3559,7 @@ AC_CACHE_VAL(lt_cv_path_LD,
        # but apparently some variants of GNU ld only accept -v.
        # Break only if it was the GNU/non-GNU ld that we prefer.
        case `"$lt_cv_path_LD" -v 2>&1 </dev/null` in
@@ -9,7 +11,7 @@
  	test no != "$with_gnu_ld" && break
  	;;
        *)
-@@ -3364,7 +3364,7 @@ m4_defun([_LT_PATH_LD_GNU],
+@@ -3599,7 +3599,7 @@ m4_defun([_LT_PATH_LD_GNU],
  [AC_CACHE_CHECK([if the linker ($LD) is GNU ld], lt_cv_prog_gnu_ld,
  [# I'd rather use --version here, but apparently some GNU lds only accept -v.
  case `$LD -v 2>&1 </dev/null` in
@@ -18,7 +20,7 @@
    lt_cv_prog_gnu_ld=yes
    ;;
  *)
-@@ -5116,7 +5116,7 @@ _LT_EOF
+@@ -5381,7 +5381,7 @@ _LT_EOF
        ;;
  
      beos*)
@@ -27,7 +29,7 @@
  	_LT_TAGVAR(allow_undefined_flag, $1)=unsupported
  	# Joseph Beckenbach <jrb3@best.com> says some releases of gcc
  	# support --undefined.  This deserves some investigation.  FIXME
-@@ -5209,7 +5209,7 @@ _LT_EOF
+@@ -5479,7 +5479,7 @@ _LT_EOF
  	  diet\ *) tmp_diet=yes;;	# linux-dietlibc with static linking (!diet-dyn)
  	esac
        fi
@@ -36,7 +38,7 @@
  	 && test no = "$tmp_diet"
        then
  	tmp_addflag=' $pic_flag'
-@@ -5304,7 +5304,7 @@ _LT_EOF
+@@ -5575,7 +5575,7 @@ _LT_EOF
  *** used, and then restart.
  
  _LT_EOF
@@ -45,7 +47,7 @@
  	_LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag $libobjs $deplibs $compiler_flags $wl-soname $wl$soname -o $lib'
  	_LT_TAGVAR(archive_expsym_cmds, $1)='$CC -shared $pic_flag $libobjs $deplibs $compiler_flags $wl-soname $wl$soname $wl-retain-symbols-file $wl$export_symbols -o $lib'
        else
-@@ -5332,7 +5332,7 @@ _LT_EOF
+@@ -5603,7 +5603,7 @@ _LT_EOF
  	  # use absolute paths for naming shared libraries, and exclude the
  	  # DT_RUNPATH tag from executables and libraries.  But doing so
  	  # requires that you compile everything twice, which is a pain.
@@ -54,7 +56,7 @@
  	    _LT_TAGVAR(hardcode_libdir_flag_spec, $1)='$wl-rpath $wl$libdir'
  	    _LT_TAGVAR(archive_cmds, $1)='$CC -shared $libobjs $deplibs $compiler_flags $wl-soname $wl$soname -o $lib'
  	    _LT_TAGVAR(archive_expsym_cmds, $1)='$CC -shared $libobjs $deplibs $compiler_flags $wl-soname $wl$soname $wl-retain-symbols-file $wl$export_symbols -o $lib'
-@@ -5351,7 +5351,7 @@ _LT_EOF
+@@ -5622,7 +5622,7 @@ _LT_EOF
        ;;
  
      *)
@@ -63,7 +65,7 @@
  	_LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag $libobjs $deplibs $compiler_flags $wl-soname $wl$soname -o $lib'
  	_LT_TAGVAR(archive_expsym_cmds, $1)='$CC -shared $pic_flag $libobjs $deplibs $compiler_flags $wl-soname $wl$soname $wl-retain-symbols-file $wl$export_symbols -o $lib'
        else
-@@ -6642,7 +6642,7 @@ if test yes != "$_lt_caught_CXX_error";
+@@ -6922,7 +6922,7 @@ if test yes != "$_lt_caught_CXX_error"; then
          ;;
  
        beos*)

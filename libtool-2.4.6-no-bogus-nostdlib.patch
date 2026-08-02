@@ -1,78 +1,77 @@
-diff -up libtool-2.5.4/m4/libtool.m4.5~ libtool-2.5.4/m4/libtool.m4
---- libtool-2.5.4/m4/libtool.m4.5~	2025-04-25 01:51:27.161287771 +0200
-+++ libtool-2.5.4/m4/libtool.m4	2025-04-25 01:53:06.389119604 +0200
-@@ -6559,8 +6559,8 @@ if test yes != "$_lt_caught_CXX_error";
+--- libtool-2.6.2/m4/libtool.m4
++++ libtool-2.6.2/m4/libtool.m4
+@@ -6700,8 +6700,8 @@ if test yes != "$_lt_caught_CXX_error";
        # Check if GNU C++ uses GNU ld as the underlying linker, since the
        # archiving commands below assume that GNU ld is being used.
        if test yes = "$with_gnu_ld"; then
--        _LT_TAGVAR(archive_cmds, $1)='$CC $pic_flag -shared -nostdlib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags $wl-soname $wl$soname -o $lib'
--        _LT_TAGVAR(archive_expsym_cmds, $1)='$CC $pic_flag -shared -nostdlib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags $wl-soname $wl$soname $wl-retain-symbols-file $wl$export_symbols -o $lib'
+-        _LT_TAGVAR(archive_cmds, $1)='$CC $pic_flag -shared $stdlibflag $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags $wl-soname $wl$soname -o $lib'
+-        _LT_TAGVAR(archive_expsym_cmds, $1)='$CC $pic_flag -shared $stdlibflag $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags $wl-soname $wl$soname $wl-retain-symbols-file $wl$export_symbols -o $lib'
 +        _LT_TAGVAR(archive_cmds, $1)='$CC $pic_flag -shared $libobjs $deplibs $compiler_flags $wl-soname $wl$soname -o $lib'
 +        _LT_TAGVAR(archive_expsym_cmds, $1)='$CC $pic_flag -shared $libobjs $deplibs $compiler_flags $wl-soname $wl$soname $wl-retain-symbols-file $wl$export_symbols -o $lib'
  
          _LT_TAGVAR(hardcode_libdir_flag_spec, $1)='$wl-rpath $wl$libdir'
          _LT_TAGVAR(export_dynamic_flag_spec, $1)='$wl--export-dynamic'
-@@ -6585,7 +6585,7 @@ if test yes != "$_lt_caught_CXX_error";
+@@ -6726,7 +6726,7 @@ if test yes != "$_lt_caught_CXX_error";
          # linker, instead of GNU ld.  If possible, this setting should
          # overridden to take advantage of the native linker features on
          # the platform it is being used on.
--        _LT_TAGVAR(archive_cmds, $1)='$CC -shared -nostdlib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags -o $lib'
+-        _LT_TAGVAR(archive_cmds, $1)='$CC -shared $stdlibflag $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags -o $lib'
 +        _LT_TAGVAR(archive_cmds, $1)='$CC -shared $libobjs $deplibs $compiler_flags -o $lib'
        fi
  
        # Commands to make compiler produce verbose output that lists
-@@ -6856,7 +6856,7 @@ if test yes != "$_lt_caught_CXX_error";
+@@ -7003,7 +7003,7 @@ if test yes != "$_lt_caught_CXX_error";
  	  _LT_TAGVAR(file_list_spec, $1)='@'
  
  	  if $LD --help 2>&1 | $GREP 'auto-import' > /dev/null; then
--	    _LT_TAGVAR(archive_cmds, $1)='$CC -shared -nostdlib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags -o $output_objdir/$soname $wl--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
+-	    _LT_TAGVAR(archive_cmds, $1)='$CC -shared $stdlibflag $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags -o $output_objdir/$soname $wl--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
 +	    _LT_TAGVAR(archive_cmds, $1)='$CC -shared $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags -o $output_objdir/$soname $wl--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
  	    # If the export-symbols file already is a .def file, use it as
  	    # is; otherwise, prepend EXPORTS...
  	    _LT_TAGVAR(archive_expsym_cmds, $1)='if _LT_DLL_DEF_P([$export_symbols]); then
-@@ -6865,7 +6865,7 @@ if test yes != "$_lt_caught_CXX_error";
+@@ -7012,7 +7012,7 @@ if test yes != "$_lt_caught_CXX_error";
                echo EXPORTS > $output_objdir/$soname.def;
                cat $export_symbols >> $output_objdir/$soname.def;
              fi~
--            $CC -shared -nostdlib $output_objdir/$soname.def $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags -o $output_objdir/$soname $wl--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
+-            $CC -shared $stdlibflag $output_objdir/$soname.def $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags -o $output_objdir/$soname $wl--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
 +            $CC -shared $output_objdir/$soname.def $libobjs $deplibs $compiler_flags -o $output_objdir/$soname $wl--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
  	  else
  	    _LT_TAGVAR(ld_shlibs, $1)=no
  	  fi
-@@ -6972,7 +6972,7 @@ if test yes != "$_lt_caught_CXX_error";
+@@ -7118,7 +7118,7 @@ if test yes != "$_lt_caught_CXX_error";
              ;;
            *)
              if test yes = "$GXX"; then
--              _LT_TAGVAR(archive_cmds, $1)='$RM $output_objdir/$soname~$CC -shared -nostdlib $pic_flag $wl+b $wl$install_libdir -o $output_objdir/$soname $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags~test "x$output_objdir/$soname" = "x$lib" || mv $output_objdir/$soname $lib'
+-              _LT_TAGVAR(archive_cmds, $1)='$RM $output_objdir/$soname~$CC -shared $stdlibflag $pic_flag $wl+b $wl$install_libdir -o $output_objdir/$soname $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags~test "x$output_objdir/$soname" = "x$lib" || mv $output_objdir/$soname $lib'
 +              _LT_TAGVAR(archive_cmds, $1)='$RM $output_objdir/$soname~$CC -shared $pic_flag $wl+b $wl$install_libdir -o $output_objdir/$soname $libobjs $deplibs $compiler_flags~test "x$output_objdir/$soname" = "x$lib" || mv $output_objdir/$soname $lib'
              else
                # FIXME: insert proper C++ library support
                _LT_TAGVAR(ld_shlibs, $1)=no
-@@ -7040,13 +7040,13 @@ if test yes != "$_lt_caught_CXX_error";
+@@ -7186,13 +7186,13 @@ if test yes != "$_lt_caught_CXX_error";
  	      if test no = "$with_gnu_ld"; then
  	        case $host_cpu in
  	          hppa*64*)
--	            _LT_TAGVAR(archive_cmds, $1)='$CC -shared -nostdlib -fPIC $wl+h $wl$soname -o $lib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags'
+-	            _LT_TAGVAR(archive_cmds, $1)='$CC -shared $stdlibflag -fPIC $wl+h $wl$soname -o $lib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags'
 +	            _LT_TAGVAR(archive_cmds, $1)='$CC -shared -fPIC $wl+h $wl$soname -o $lib $libobjs $deplibs $compiler_flags'
  	            ;;
  	          ia64*)
--	            _LT_TAGVAR(archive_cmds, $1)='$CC -shared -nostdlib $pic_flag $wl+h $wl$soname $wl+nodefaultrpath -o $lib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags'
+-	            _LT_TAGVAR(archive_cmds, $1)='$CC -shared $stdlibflag $pic_flag $wl+h $wl$soname $wl+nodefaultrpath -o $lib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags'
 +	            _LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag $wl+h $wl$soname $wl+nodefaultrpath -o $lib $libobjs $deplibs $compiler_flags'
  	            ;;
  	          *)
--	            _LT_TAGVAR(archive_cmds, $1)='$CC -shared -nostdlib $pic_flag $wl+h $wl$soname $wl+b $wl$install_libdir -o $lib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags'
+-	            _LT_TAGVAR(archive_cmds, $1)='$CC -shared $stdlibflag $pic_flag $wl+h $wl$soname $wl+b $wl$install_libdir -o $lib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags'
 +	            _LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag $wl+h $wl$soname $wl+b $wl$install_libdir -o $lib $libobjs $deplibs $compiler_flags'
  	            ;;
  	        esac
  	      fi
-@@ -7087,9 +7087,9 @@ if test yes != "$_lt_caught_CXX_error";
+@@ -7233,9 +7233,9 @@ if test yes != "$_lt_caught_CXX_error";
            *)
  	    if test yes = "$GXX"; then
  	      if test no = "$with_gnu_ld"; then
--	        _LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag -nostdlib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags $wl-soname $wl$soname `test -n "$verstring" && func_echo_all "$wl-set_version $wl$verstring"` $wl-update_registry $wl$output_objdir/so_locations -o $lib'
+-	        _LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag $stdlibflag $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags $wl-soname $wl$soname `test -n "$verstring" && func_echo_all "$wl-set_version $wl$verstring"` $wl-update_registry $wl$output_objdir/so_locations -o $lib'
 +	        _LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag $libobjs $deplibs $compiler_flags $wl-soname $wl$soname `test -n "$verstring" && func_echo_all "$wl-set_version $wl$verstring"` $wl-update_registry $wl$output_objdir/so_locations -o $lib'
  	      else
--	        _LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag -nostdlib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags $wl-soname $wl$soname `test -n "$verstring" && func_echo_all "$wl-set_version $wl$verstring"` -o $lib'
+-	        _LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag $stdlibflag $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags $wl-soname $wl$soname `test -n "$verstring" && func_echo_all "$wl-set_version $wl$verstring"` -o $lib'
 +	        _LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag $libobjs $deplibs $compiler_flags $wl-soname $wl$soname `test -n "$verstring" && func_echo_all "$wl-set_version $wl$verstring"` -o $lib'
  	      fi
  	    fi

@@ -1,5 +1,7 @@
---- libtool-2.4.6/build-aux/ltmain.in.0002~	2015-07-12 16:03:30.644340895 +0200
-+++ libtool-2.4.6/build-aux/ltmain.in	2015-07-12 16:04:11.417729092 +0200
+diff --git a/build-aux/ltmain.in b/build-aux/ltmain.in
+index cb55dc4..a290e57 100644
+--- a/build-aux/ltmain.in
++++ b/build-aux/ltmain.in
 @@ -31,7 +31,8 @@ PROGRAM=libtool
  PACKAGE=@PACKAGE@
  VERSION=@VERSION@

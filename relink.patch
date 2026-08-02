@@ -1,6 +1,8 @@
---- libtool-2.4.6/build-aux/ltmain.in.0000~	2015-07-12 15:55:44.866613700 +0200
-+++ libtool-2.4.6/build-aux/ltmain.in	2015-07-12 15:58:02.767136151 +0200
-@@ -7818,15 +7818,23 @@ EOF
+diff --git a/build-aux/ltmain.in b/build-aux/ltmain.in
+index af2f756..cb55dc4 100644
+--- a/build-aux/ltmain.in
++++ b/build-aux/ltmain.in
+@@ -8095,15 +8095,23 @@ func_mode_link ()
  	fi
  
  	tmp_deplibs=

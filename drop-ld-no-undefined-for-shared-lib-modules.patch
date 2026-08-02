@@ -19,9 +19,11 @@ For now, this patch is a compromize between (2.1) and (2.2), while (2.3) is not 
 
 // mikhailnov, 12.05.2020, after discussion with bero
 
---- libtool-2.4.6/build-aux/ltmain.in.0013~	2015-07-12 16:13:04.092810000 +0200
-+++ libtool-2.4.6/build-aux/ltmain.in	2015-07-12 16:14:18.645184139 +0200
-@@ -5527,6 +5527,12 @@ func_mode_link ()
+diff --git a/build-aux/ltmain.in b/build-aux/ltmain.in
+index a290e57..8f8f448 100644
+--- a/build-aux/ltmain.in
++++ b/build-aux/ltmain.in
+@@ -5866,6 +5866,12 @@ func_mode_link ()
        fi
      done # argument parsing loop
  
